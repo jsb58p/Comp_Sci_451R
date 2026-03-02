@@ -1,0 +1,50 @@
+{
+  "name": "vite-react-ts-stylex-tailwind-starter-project",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "cy:open": "cypress open",
+    "check-updates": "ncu"
+  },
+  "dependencies": {
+    "@stylexjs/stylex": "^0.15.3",
+    "@tailwindcss/vite": "^4.1.13",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.542.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^4.1.13"
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.27.1",
+    "@eslint/js": "^9.35.0",
+    "@stylexjs/babel-plugin": "^0.15.3",
+    "@stylexjs/postcss-plugin": "^0.15.3",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.2",
+    "autoprefixer": "^10.4.21",
+    "axe-core": "^4.10.3",
+    "cypress": "^15.1.0",
+    "cypress-axe": "^1.7.0",
+    "cypress-real-events": "^1.15.0",
+    "cypress-runner-themes": "^1.0.3",
+    "eslint": "^9.35.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.14",
+    "tw-animate-css": "^1.3.8",
+    "typescript": "~5.9.2",
+    "typescript-eslint": "^8.42.0",
+    "vite": "^7.1.4"
+  }
+}
