@@ -8,6 +8,14 @@ interface AuthResponse {
   username: string | null;
 }
 
+function Dashboard({ username }: { username: string }) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <h1 className="text-2xl font-semibold">Welcome, {username}!</h1>
+    </div>
+  );
+}
+
 function App() {
   const [mode, setMode] = useState<Mode>("login");
   const [form, setForm] = useState({
@@ -19,6 +27,31 @@ function App() {
   });
   const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(null);
   const [loading, setLoading] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
+  const [emailSent, setEmailSent] = useState(false);
+
+  if (loggedInUser) {
+    return <Dashboard username={loggedInUser} />;
+  }
+
+  if (emailSent) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="bg-white rounded-2xl shadow-md w-full max-w-md p-8 text-center">
+          <h2 className="text-lg font-semibold mb-2">Check your email</h2>
+          <p className="text-sm text-gray-600">
+            A verification link has been sent to your email address. Click the link to activate your account.
+          </p>
+          <button
+            className="mt-6 text-sm text-gray-400 hover:text-black transition-colors"
+            onClick={() => { setEmailSent(false); switchMode("login"); }}
+          >
+            Back to login
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -52,6 +85,14 @@ function App() {
         body: JSON.stringify(body),
       });
       const data: AuthResponse = await res.json();
+      if (data.success && mode === "login") {
+        setLoggedInUser(data.username ?? form.usernameOrEmail);
+        return;
+      }
+      if (data.success && mode === "register") {
+        setEmailSent(true);
+        return;
+      }
       setMessage({ text: data.message, ok: data.success });
     } catch {
       setMessage({ text: "Could not connect to server.", ok: false });
