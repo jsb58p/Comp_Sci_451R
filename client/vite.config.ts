@@ -22,7 +22,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://compsci451r-production.up.railway.app",
+        target: "http://localhost:8080",
         changeOrigin: true,
       },
     },
