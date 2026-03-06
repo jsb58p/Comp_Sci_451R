@@ -1,5 +1,7 @@
 package com.example.server.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,8 @@ import org.springframework.stereotype.Service;
 public class EmailService {
 
     private final JavaMailSender mailSender;
+    @Autowired
+    private Environment env;
 
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
@@ -24,7 +28,7 @@ public class EmailService {
     }
 
     public void sendPasswordResetEmail(String toEmail, String token) {
-        String link = "http://localhost:5173/Comp_Sci_451R/reset-password?token=" + token;
+        String link = env.getProperty("app.base-url") + "/api/auth/verify?token=" + token;
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
