@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import ResetPassword from "./ResetPassword";
+import API_BASE from "./config";
 
 type Mode = "login" | "register" | "forgot";
 
@@ -102,7 +103,7 @@ function AuthPages() {
 
     if (mode === "forgot") {
       try {
-        await fetch("/api/auth/forgot-password", {
+        await fetch(`${API_BASE}/api/auth/forgot-password`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: form.forgotEmail }),
@@ -125,7 +126,7 @@ function AuthPages() {
       }
     }
 
-    const url = mode === "login" ? "/api/auth/login" : "/api/auth/register";
+    const url = mode === "login" ? `${API_BASE}/api/auth/login` : `${API_BASE}/api/auth/register`;
     const body =
       mode === "login"
         ? { usernameOrEmail: form.usernameOrEmail, password: form.password }
