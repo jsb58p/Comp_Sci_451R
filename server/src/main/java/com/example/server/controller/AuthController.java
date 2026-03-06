@@ -31,4 +31,11 @@ public class AuthController {
         HttpStatus status = response.isSuccess() ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
         return ResponseEntity.status(status).body(response);
     }
+
+    @GetMapping("/verify")
+    public ResponseEntity<AuthResponse> verify(@RequestParam String token) {
+        AuthResponse response = userService.verifyEmail(token);
+        HttpStatus status = response.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(response);
+    }
 }
