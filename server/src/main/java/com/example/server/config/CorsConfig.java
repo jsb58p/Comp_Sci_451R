@@ -14,7 +14,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedOriginPatterns("http://localhost:*", "http://192.168.*.*:*", "https://jsb58p.github.io")
+                        .allowedOriginPatterns("http://localhost:*", "http://192.168.*.*:*", "https://jsb58p.github.io", "https://comp-sci-451r-git-1017481191790.us-south1.run.app")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
