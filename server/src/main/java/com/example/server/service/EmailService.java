@@ -28,7 +28,7 @@ public class EmailService {
     }
 
     public void sendPasswordResetEmail(String toEmail, String token) {
-        String link = env.getProperty("app.base-url") + "/api/auth/verify?token=" + token;
+        String link = "https://jsb58p.github.io/Comp_Sci_451R/reset-password?token=" + token;
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
