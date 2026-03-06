@@ -119,3 +119,29 @@
   }
 }
 
+@theme {
+  /* Text Sizes */
+  --text-5xl: 2.986rem;
+  --text-4xl: 2.488rem;
+  --text-3xl: 2.074rem;
+  --text-2xl: 1.728rem;
+  --text-xl: 1.44rem;
+  --text-large: 1.2rem;
+  --text-medium: 1rem;
+  --text-small: 0.833rem;
+  --text-xs: 0.694rem;
+
+  /* Font Family */
+  --font-primary:
+    ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+
+  /* Font Weight */
+  --font-weight-primary: 500;
+  --font-weight-secondary: 600;
+
+  /* Colors */
+  --color-primary: #f4f7fa;
+  --color-secondary: #0f172a;
+  --color-accent: #64748b;
+}

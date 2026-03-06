@@ -1,0 +1,25 @@
+{
+  "text": {
+    "5xl": "2.986rem",
+    "4xl": "2.488rem",
+    "3xl": "2.074rem",
+    "2xl": "1.728rem",
+    "xl": "1.44rem",
+    "large": "1.2rem",
+    "medium": "1rem",
+    "small": "0.833rem",
+    "xs": "0.694rem"
+  },
+  "font": {
+    "primary": "ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'"
+  },
+  "font-weight": {
+    "primary": 500,
+    "secondary": 600
+  },
+  "color": {
+    "primary": "#F4F7FA",
+    "secondary": "#0F172A",
+    "accent": "#64748B"
+  }
+}
