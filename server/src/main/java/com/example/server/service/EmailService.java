@@ -18,7 +18,7 @@ public class EmailService {
     }
 
     public void sendVerificationEmail(String toEmail, String token) {
-        String link = "http://localhost:8080/api/auth/verify?token=" + token;
+        String link = env.getProperty("app.base-url") + "/api/auth/verify?token=" + token;
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
