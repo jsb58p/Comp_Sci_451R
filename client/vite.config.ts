@@ -5,6 +5,7 @@ import path from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/Comp_Sci_451R/',
   plugins: [
     react({
       babel: {
