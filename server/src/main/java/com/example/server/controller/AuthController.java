@@ -1,8 +1,10 @@
 package com.example.server.controller;
 
 import com.example.server.dto.AuthResponse;
+import com.example.server.dto.ForgotPasswordRequest;
 import com.example.server.dto.LoginRequest;
 import com.example.server.dto.RegisterRequest;
+import com.example.server.dto.ResetPasswordRequest;
 import com.example.server.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,19 @@ public class AuthController {
     @GetMapping("/verify")
     public ResponseEntity<AuthResponse> verify(@RequestParam String token) {
         AuthResponse response = userService.verifyEmail(token);
+        HttpStatus status = response.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(response);
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<AuthResponse> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+        AuthResponse response = userService.forgotPassword(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<AuthResponse> resetPassword(@RequestBody ResetPasswordRequest request) {
+        AuthResponse response = userService.resetPassword(request);
         HttpStatus status = response.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(response);
     }

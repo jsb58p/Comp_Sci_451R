@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
+import ResetPassword from "./ResetPassword";
 
-type Mode = "login" | "register";
+type Mode = "login" | "register" | "forgot";
 
 interface AuthResponse {
   success: boolean;
@@ -16,7 +18,7 @@ function Dashboard({ username }: { username: string }) {
   );
 }
 
-function App() {
+function AuthPages() {
   const [mode, setMode] = useState<Mode>("login");
   const [form, setForm] = useState({
     username: "",
@@ -24,11 +26,13 @@ function App() {
     password: "",
     confirmPassword: "",
     usernameOrEmail: "",
+    forgotEmail: "",
   });
   const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(null);
   const [loading, setLoading] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
   const [emailSent, setEmailSent] = useState(false);
+  const [resetEmailSent, setResetEmailSent] = useState(false);
 
   if (loggedInUser) {
     return <Dashboard username={loggedInUser} />;
@@ -45,6 +49,25 @@ function App() {
           <button
             className="mt-6 text-sm text-gray-400 hover:text-black transition-colors"
             onClick={() => { setEmailSent(false); switchMode("login"); }}
+          >
+            Back to login
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (resetEmailSent) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="bg-white rounded-2xl shadow-md w-full max-w-md p-8 text-center">
+          <h2 className="text-lg font-semibold mb-2">Check your email</h2>
+          <p className="text-sm text-gray-600">
+            If an account with that email exists, a password reset link has been sent. Check your inbox.
+          </p>
+          <button
+            className="mt-6 text-sm text-gray-400 hover:text-black transition-colors"
+            onClick={() => { setResetEmailSent(false); switchMode("login"); }}
           >
             Back to login
           </button>
@@ -74,6 +97,22 @@ function App() {
     e.preventDefault();
     setLoading(true);
     setMessage(null);
+
+    if (mode === "forgot") {
+      try {
+        await fetch("/api/auth/forgot-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: form.forgotEmail }),
+        });
+        setResetEmailSent(true);
+      } catch {
+        setMessage({ text: "Could not connect to server.", ok: false });
+      } finally {
+        setLoading(false);
+      }
+      return;
+    }
 
     if (mode === "register") {
       const error = validatePassword(form.password);
@@ -116,6 +155,55 @@ function App() {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (mode === "forgot") {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="bg-white rounded-2xl shadow-md w-full max-w-md p-8">
+          <h2 className="text-lg font-semibold mb-6">Forgot your password?</h2>
+          <p className="text-sm text-gray-500 mb-4">
+            Enter your email and we'll send you a link to reset your password.
+          </p>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-medium">Email</label>
+              <input
+                name="forgotEmail"
+                type="email"
+                value={form.forgotEmail}
+                onChange={handleChange}
+                required
+                className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+                placeholder="Enter your email"
+              />
+            </div>
+
+            {message && (
+              <p className={`text-sm ${message.ok ? "text-green-600" : "text-red-500"}`}>
+                {message.text}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-black text-white rounded-lg py-2 text-sm font-medium hover:bg-gray-800 disabled:opacity-50 transition-colors"
+            >
+              {loading ? "Please wait..." : "Send Reset Link"}
+            </button>
+
+            <button
+              type="button"
+              className="text-sm text-gray-400 hover:text-black transition-colors"
+              onClick={() => switchMode("login")}
+            >
+              Back to login
+            </button>
+          </form>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -199,6 +287,15 @@ function App() {
               className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
               placeholder="Enter password"
             />
+            {mode === "login" && (
+              <button
+                type="button"
+                className="text-xs text-gray-400 hover:text-black text-left mt-1 transition-colors"
+                onClick={() => switchMode("forgot")}
+              >
+                Forgot password?
+              </button>
+            )}
           </div>
 
           {mode === "register" && (
@@ -232,6 +329,15 @@ function App() {
         </form>
       </div>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<AuthPages />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+    </Routes>
   );
 }
 

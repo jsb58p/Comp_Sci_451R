@@ -1,14 +1,19 @@
 package com.example.server.service;
 
 import com.example.server.dto.AuthResponse;
+import com.example.server.dto.ForgotPasswordRequest;
 import com.example.server.dto.LoginRequest;
 import com.example.server.dto.RegisterRequest;
+import com.example.server.dto.ResetPasswordRequest;
+import com.example.server.model.PasswordResetToken;
 import com.example.server.model.User;
 import com.example.server.model.VerificationToken;
+import com.example.server.repository.PasswordResetTokenRepository;
 import com.example.server.repository.UserRepository;
 import com.example.server.repository.VerificationTokenRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -19,14 +24,17 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final VerificationTokenRepository tokenRepository;
+    private final PasswordResetTokenRepository resetTokenRepository;
     private final EmailService emailService;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public UserService(UserRepository userRepository,
                        VerificationTokenRepository tokenRepository,
+                       PasswordResetTokenRepository resetTokenRepository,
                        EmailService emailService) {
         this.userRepository = userRepository;
         this.tokenRepository = tokenRepository;
+        this.resetTokenRepository = resetTokenRepository;
         this.emailService = emailService;
     }
 
@@ -88,6 +96,54 @@ public class UserService {
         tokenRepository.delete(vt);
 
         return new AuthResponse(true, "Email verified! You can now log in.", user.getUsername());
+    }
+
+    @Transactional
+    public AuthResponse forgotPassword(ForgotPasswordRequest request) {
+        Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
+        if (userOpt.isEmpty()) {
+            // Return success anyway to avoid revealing whether an email is registered
+            return new AuthResponse(true, "If that email exists, a reset link has been sent.", null);
+        }
+
+        User user = userOpt.get();
+        resetTokenRepository.deleteByUser_Id(user.getId());
+
+        String token = UUID.randomUUID().toString();
+        PasswordResetToken prt = new PasswordResetToken(token, user, LocalDateTime.now().plusHours(1));
+        resetTokenRepository.save(prt);
+
+        emailService.sendPasswordResetEmail(user.getEmail(), token);
+        return new AuthResponse(true, "If that email exists, a reset link has been sent.", null);
+    }
+
+    @Transactional
+    public AuthResponse resetPassword(ResetPasswordRequest request) {
+        if (!request.getPassword().equals(request.getConfirmPassword())) {
+            return new AuthResponse(false, "Passwords do not match.", null);
+        }
+        String passwordError = validatePassword(request.getPassword());
+        if (passwordError != null) {
+            return new AuthResponse(false, passwordError, null);
+        }
+
+        Optional<PasswordResetToken> prtOpt = resetTokenRepository.findByToken(request.getToken());
+        if (prtOpt.isEmpty()) {
+            return new AuthResponse(false, "Invalid or expired reset link.", null);
+        }
+
+        PasswordResetToken prt = prtOpt.get();
+        if (prt.getExpiresAt().isBefore(LocalDateTime.now())) {
+            resetTokenRepository.delete(prt);
+            return new AuthResponse(false, "Reset link has expired.", null);
+        }
+
+        User user = prt.getUser();
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        userRepository.save(user);
+        resetTokenRepository.delete(prt);
+
+        return new AuthResponse(true, "Password reset successfully. You can now log in.", null);
     }
 
     public AuthResponse login(LoginRequest request) {

@@ -22,4 +22,14 @@ public class EmailService {
         message.setText("Click the link below to verify your account:\n\n" + link + "\n\nThis link expires in 24 hours.");
         mailSender.send(message);
     }
+
+    public void sendPasswordResetEmail(String toEmail, String token) {
+        String link = "http://localhost:5173/Comp_Sci_451R/reset-password?token=" + token;
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setSubject("Reset your password");
+        message.setText("Click the link below to reset your password:\n\n" + link + "\n\nThis link expires in 1 hour.");
+        mailSender.send(message);
+    }
 }
