@@ -62,10 +62,27 @@ function App() {
     setMessage(null);
   }
 
+  function validatePassword(password: string): string | null {
+    if (password.length < 8) return "Password must be at least 8 characters.";
+    if (!/[0-9]/.test(password)) return "Password must contain at least one number.";
+    if (!/[a-z]/.test(password)) return "Password must contain at least one lowercase letter.";
+    if (!/[^a-zA-Z0-9]/.test(password)) return "Password must contain at least one special character.";
+    return null;
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setMessage(null);
+
+    if (mode === "register") {
+      const error = validatePassword(form.password);
+      if (error) {
+        setMessage({ text: error, ok: false });
+        setLoading(false);
+        return;
+      }
+    }
 
     const url = mode === "login" ? "/api/auth/login" : "/api/auth/register";
     const body =

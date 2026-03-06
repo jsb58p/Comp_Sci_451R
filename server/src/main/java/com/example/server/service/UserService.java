@@ -30,9 +30,25 @@ public class UserService {
         this.emailService = emailService;
     }
 
+    private String validatePassword(String password) {
+        if (password.length() < 8)
+            return "Password must be at least 8 characters.";
+        if (!password.matches(".*[0-9].*"))
+            return "Password must contain at least one number.";
+        if (!password.matches(".*[a-z].*"))
+            return "Password must contain at least one lowercase letter.";
+        if (!password.matches(".*[^a-zA-Z0-9].*"))
+            return "Password must contain at least one special character.";
+        return null;
+    }
+
     public AuthResponse register(RegisterRequest request) {
         if (!request.getPassword().equals(request.getConfirmPassword())) {
             return new AuthResponse(false, "Passwords do not match", null);
+        }
+        String passwordError = validatePassword(request.getPassword());
+        if (passwordError != null) {
+            return new AuthResponse(false, passwordError, null);
         }
         if (userRepository.existsByUsername(request.getUsername())) {
             return new AuthResponse(false, "Username already taken", null);
