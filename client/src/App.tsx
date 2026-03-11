@@ -4,6 +4,7 @@ import ResetPassword from "./ResetPassword";
 import API_BASE from "./config";
 
 type Mode = "login" | "register" | "forgot";
+type Page = "dashboard" | "spending" | "income" | "profile";
 
 interface AuthResponse {
   success: boolean;
@@ -11,13 +12,109 @@ interface AuthResponse {
   username: string | null;
 }
 
-function Dashboard({ username }: { username: string }) {
+// ─── Sidebar ────────────────────────────────────────────────────────────────
+
+function Sidebar({
+  activePage,
+  onNavigate,
+  onLogout,
+}: {
+  activePage: Page;
+  onNavigate: (page: Page) => void;
+  onLogout: () => void;
+}) {
+  const navItems: { label: string; page: Page }[] = [
+    { label: "Dashboard", page: "dashboard" },
+    { label: "Spending", page: "spending" },
+    { label: "Income", page: "income" },
+    { label: "Profile", page: "profile" },
+  ];
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <h1 className="text-2xl font-semibold">Welcome, {username}!</h1>
+    <aside className="w-56 bg-white border-r border-gray-200 flex flex-col h-screen shrink-0">
+      <div className="p-5 border-b border-gray-200">
+        <h2 className="font-semibold text-gray-900">My App</h2>
+      </div>
+      <nav className="flex-1 p-3 flex flex-col gap-1">
+        {navItems.map((item) => (
+          <button
+            key={item.page}
+            onClick={() => onNavigate(item.page)}
+            className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+              activePage === item.page
+                ? "bg-black text-white"
+                : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+            }`}
+          >
+            {item.label}
+          </button>
+        ))}
+      </nav>
+      <div className="p-3 border-t border-gray-200">
+        <button
+          onClick={onLogout}
+          className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+        >
+          Logout
+        </button>
+      </div>
+    </aside>
+  );
+}
+
+// ─── Pages ───────────────────────────────────────────────────────────────────
+
+function DashboardPage({ username }: { username: string }) {
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-semibold text-gray-900">Welcome, {username}!</h1>
     </div>
   );
 }
+
+function SpendingPage() {
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-semibold text-gray-900">Spending</h1>
+    </div>
+  );
+}
+
+function IncomePage() {
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-semibold text-gray-900">Income</h1>
+    </div>
+  );
+}
+
+function ProfilePage() {
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-semibold text-gray-900">Profile</h1>
+    </div>
+  );
+}
+
+// ─── Post-login layout ───────────────────────────────────────────────────────
+
+function AppLayout({ username, onLogout }: { username: string; onLogout: () => void }) {
+  const [activePage, setActivePage] = useState<Page>("dashboard");
+
+  return (
+    <div className="flex h-screen bg-gray-100">
+      <Sidebar activePage={activePage} onNavigate={setActivePage} onLogout={onLogout} />
+      <main className="flex-1 overflow-y-auto">
+        {activePage === "dashboard" && <DashboardPage username={username} />}
+        {activePage === "spending" && <SpendingPage />}
+        {activePage === "income" && <IncomePage />}
+        {activePage === "profile" && <ProfilePage />}
+      </main>
+    </div>
+  );
+}
+
+// ─── Auth ────────────────────────────────────────────────────────────────────
 
 function AuthPages() {
   const [mode, setMode] = useState<Mode>("login");
@@ -38,7 +135,7 @@ function AuthPages() {
   const [resetEmailSent, setResetEmailSent] = useState(false);
 
   if (loggedInUser) {
-    return <Dashboard username={loggedInUser} />;
+    return <AppLayout username={loggedInUser} onLogout={() => setLoggedInUser(null)} />;
   }
 
   if (emailSent) {
@@ -181,13 +278,11 @@ function AuthPages() {
                 placeholder="Enter your email"
               />
             </div>
-
             {message && (
               <p className={`text-sm ${message.ok ? "text-green-600" : "text-red-500"}`}>
                 {message.text}
               </p>
             )}
-
             <button
               type="submit"
               disabled={loading}
@@ -195,7 +290,6 @@ function AuthPages() {
             >
               {loading ? "Please wait..." : "Send Reset Link"}
             </button>
-
             <button
               type="button"
               className="text-sm text-gray-400 hover:text-black transition-colors"
@@ -212,7 +306,6 @@ function AuthPages() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white rounded-2xl shadow-md w-full max-w-md p-8">
-        {/* Tabs */}
         <div className="flex mb-6 border-b">
           <button
             className={`flex-1 pb-2 text-sm font-medium transition-colors ${
