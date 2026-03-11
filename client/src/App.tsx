@@ -33,7 +33,7 @@ function Sidebar({
   return (
     <aside className="w-56 bg-white border-r border-gray-200 flex flex-col h-screen shrink-0">
       <div className="p-5 border-b border-gray-200">
-        <h2 className="font-semibold text-gray-900">My App</h2>
+        <h2 className="font-semibold text-gray-900">Budgeting App</h2>
       </div>
       <nav className="flex-1 p-3 flex flex-col gap-1">
         {navItems.map((item) => (
