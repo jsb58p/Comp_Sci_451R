@@ -2,6 +2,10 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import ResetPassword from "./ResetPassword";
 import API_BASE from "./config";
+import DashboardPage from "./pages/DashboardPage";
+import SpendingPage from "./pages/SpendingPage";
+import IncomePage from "./pages/IncomePage";
+import ProfilePage from "./pages/ProfilePage";
 
 type Mode = "login" | "register" | "forgot";
 type Page = "dashboard" | "spending" | "income" | "profile";
@@ -62,39 +66,6 @@ function Sidebar({
   );
 }
 
-// ─── Pages ───────────────────────────────────────────────────────────────────
-
-function DashboardPage({ username }: { username: string }) {
-  return (
-    <div className="p-8">
-      <h1 className="text-2xl font-semibold text-gray-900">Welcome, {username}!</h1>
-    </div>
-  );
-}
-
-function SpendingPage() {
-  return (
-    <div className="p-8">
-      <h1 className="text-2xl font-semibold text-gray-900">Spending</h1>
-    </div>
-  );
-}
-
-function IncomePage() {
-  return (
-    <div className="p-8">
-      <h1 className="text-2xl font-semibold text-gray-900">Income</h1>
-    </div>
-  );
-}
-
-function ProfilePage() {
-  return (
-    <div className="p-8">
-      <h1 className="text-2xl font-semibold text-gray-900">Profile</h1>
-    </div>
-  );
-}
 
 // ─── Post-login layout ───────────────────────────────────────────────────────
 
