@@ -9,8 +9,6 @@ interface Income {
   description: string;
 }
 
-const categories = ["Salary", "Freelance", "Investments", "Rental", "Other"];
-
 export default function IncomePage() {
   const [incomes, setIncomes] = useState<Income[]>([]);
   const [filterCategory, setFilterCategory] = useState("all");
@@ -19,6 +17,8 @@ export default function IncomePage() {
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ date: new Date().toISOString().split("T")[0], category: "", amount: "", description: "" });
   const [formError, setFormError] = useState<string | null>(null);
+  const [categories, setCategories] = useState<string[]>(["Salary", "Freelance", "Investments", "Rental", "Other"]);
+  const [newCategory, setNewCategory] = useState("");
 
   useEffect(() => {
     fetch(`${API_BASE}/api/income`, { credentials: "include" })
@@ -100,6 +100,19 @@ export default function IncomePage() {
                 <option value="">Select category</option>
                 {categories.map((c) => <option key={c} value={c}>{c}</option>)}
               </select>
+              <div className="flex gap-2 mt-1">
+                <input type="text" placeholder="Add custom category" value={newCategory}
+                  onChange={(e) => setNewCategory(e.target.value)}
+                  className="border rounded-lg px-3 py-2 text-sm flex-1 focus:outline-none focus:ring-2 focus:ring-black" />
+                <button type="button" onClick={() => {
+                  if (newCategory.trim() && !categories.includes(newCategory.trim())) {
+                    setCategories([...categories, newCategory.trim()]);
+                    setNewCategory("");
+                  }
+                }} className="border rounded-lg px-3 py-2 text-sm hover:bg-gray-50 transition-colors">
+                  Add
+                </button>
+              </div>
             </div>
             <div className="flex flex-col gap-1">
               <label className="text-xs font-medium text-gray-600">Amount ($)</label>
