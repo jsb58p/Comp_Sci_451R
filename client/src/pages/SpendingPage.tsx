@@ -23,7 +23,7 @@ export default function SpendingPage() {
   useEffect(() => {
     fetch(`${API_BASE}/api/spending`, { credentials: "include" })
       .then((res) => res.json())
-      .then((d: Expense[]) => setExpenses(d))
+      .then((d: unknown) => setExpenses(Array.isArray(d) ? d as Expense[] : []))
       .catch(() => setExpenses([]));
   }, []);
 
