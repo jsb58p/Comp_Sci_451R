@@ -53,19 +53,19 @@ export default function DashboardPage({ username }: { username: string }) {
         <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-100">
           <p className="text-sm text-gray-500">Total Balance</p>
           <p className="text-2xl font-bold text-gray-900">
-            {data ? `$${data.totalBalance.toFixed(2)}` : "—"}
+            {data?.totalBalance != null ? `$${data.totalBalance.toFixed(2)}` : "—"}
           </p>
         </div>
         <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-100">
           <p className="text-sm text-gray-500">Monthly Income</p>
           <p className="text-2xl font-bold text-green-600">
-            {data ? `$${data.monthlyIncome.toFixed(2)}` : "—"}
+            {data?.monthlyIncome != null ? `$${data.monthlyIncome.toFixed(2)}` : "—"}
           </p>
         </div>
         <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-100">
           <p className="text-sm text-gray-500">Monthly Spending</p>
           <p className="text-2xl font-bold text-red-500">
-            {data ? `$${data.monthlyExpenses.toFixed(2)}` : "—"}
+            {data?.monthlyExpenses != null ? `$${data.monthlyExpenses.toFixed(2)}` : "—"}
           </p>
         </div>
       </div>
