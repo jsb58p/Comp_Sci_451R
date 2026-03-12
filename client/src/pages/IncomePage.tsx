@@ -23,7 +23,7 @@ export default function IncomePage() {
   useEffect(() => {
     fetch(`${API_BASE}/api/income`, { credentials: "include" })
       .then((res) => res.json())
-      .then((d: Income[]) => setIncomes(d))
+      .then((d: unknown) => setIncomes(Array.isArray(d) ? d as Income[] : []))
       .catch(() => setIncomes([]));
   }, []);
 
