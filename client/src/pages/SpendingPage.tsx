@@ -19,6 +19,7 @@ export default function SpendingPage() {
   const [formError, setFormError] = useState<string | null>(null);
   const [categories, setCategories] = useState<string[]>(["Housing", "Food", "Transport", "Utilities", "Entertainment", "Healthcare", "Shopping", "Other"]);
   const [newCategory, setNewCategory] = useState("");
+  const [showCategoryList, setShowCategoryList] = useState(false);
 
   useEffect(() => {
     fetch(`${API_BASE}/api/spending`, { credentials: "include" })
@@ -95,11 +96,23 @@ export default function SpendingPage() {
             </div>
             <div className="flex flex-col gap-1">
               <label className="text-xs font-medium text-gray-600">Category</label>
-              <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}
-                className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black">
-                <option value="">Select category</option>
-                {categories.map((c) => <option key={c} value={c}>{c}</option>)}
-              </select>
+              <div className="relative">
+                  <button type="button" onClick={() => setShowCategoryList(!showCategoryList)}
+                    className="w-full border rounded-lg px-3 py-2 text-sm text-left focus:outline-none focus:ring-2 focus:ring-black">
+                    {form.category || "Select category"}
+                  </button>
+                  {showCategoryList && (
+                    <div className="absolute z-10 w-full mt-1 bg-white border rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                      {categories.map((c) => (
+                        <div key={c} className="flex items-center justify-between px-3 py-2 hover:bg-gray-50">
+                          <span className="text-sm cursor-pointer flex-1" onClick={() => { setForm({ ...form, category: c }); setShowCategoryList(false); }}>{c}</span>
+                          <button type="button" onClick={() => setCategories(categories.filter((cat) => cat !== c))}
+                            className="text-gray-400 hover:text-red-500 text-xs ml-2">✕</button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               <div className="flex gap-2 mt-1">
                 <input type="text" placeholder="Add custom category" value={newCategory}
                   onChange={(e) => setNewCategory(e.target.value)}
