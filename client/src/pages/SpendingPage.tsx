@@ -42,8 +42,8 @@ export default function SpendingPage() {
   const total = filtered.reduce((sum, e) => sum + e.amount, 0);
 
   async function handleAdd() {
-    if (!form.category || !form.amount || !form.description) {
-      setFormError("Please fill in all fields.");
+    if (!form.category || !form.amount) {
+      setFormError("Please fill in category and amount.");
       return;
     }
     try {
@@ -134,7 +134,7 @@ export default function SpendingPage() {
                 className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black" />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-xs font-medium text-gray-600">Description</label>
+              <label className="text-xs font-medium text-gray-600">Description <span className="text-gray-400 font-normal">(optional)</span></label>
               <input type="text" placeholder="Enter description" value={form.description}
                 onChange={(e) => setForm({ ...form, description: e.target.value })}
                 className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black" />

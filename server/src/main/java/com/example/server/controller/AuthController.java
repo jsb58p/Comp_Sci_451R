@@ -6,6 +6,7 @@ import com.example.server.dto.LoginRequest;
 import com.example.server.dto.RegisterRequest;
 import com.example.server.dto.ResetPasswordRequest;
 import com.example.server.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +29,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request, HttpSession session) {
         AuthResponse response = userService.login(request);
+        if (response.isSuccess() && response.getUsername() != null) {
+            session.setAttribute("username", response.getUsername());
+        }
         HttpStatus status = response.isSuccess() ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
         return ResponseEntity.status(status).body(response);
     }
@@ -39,6 +43,12 @@ public class AuthController {
         AuthResponse response = userService.verifyEmail(token);
         HttpStatus status = response.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(response);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpSession session) {
+        session.invalidate();
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/forgot-password")

@@ -15,7 +15,7 @@ import {
 import API_BASE from "../config";
 
 interface Transaction {
-  id: number;
+  id: string;
   date: string;
   description: string;
   category: string;
@@ -121,13 +121,14 @@ export default function DashboardPage({ username }: { username: string }) {
                 <th className="px-5 py-3 font-medium">Date</th>
                 <th className="px-5 py-3 font-medium">Description</th>
                 <th className="px-5 py-3 font-medium">Category</th>
+                <th className="px-5 py-3 font-medium">Type</th>
                 <th className="px-5 py-3 font-medium text-right">Amount</th>
               </tr>
             </thead>
             <tbody>
               {(data?.recentTransactions ?? []).length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-5 py-8 text-center text-gray-400">
+                  <td colSpan={5} className="px-5 py-8 text-center text-gray-400">
                     No transactions yet
                   </td>
                 </tr>
@@ -135,10 +136,15 @@ export default function DashboardPage({ username }: { username: string }) {
                 (data?.recentTransactions ?? []).map((t) => (
                   <tr key={t.id} className="border-b border-gray-50 last:border-0">
                     <td className="px-5 py-3 text-gray-500">{new Date(t.date).toLocaleDateString()}</td>
-                    <td className="px-5 py-3">{t.description}</td>
+                    <td className="px-5 py-3 text-gray-700">{t.description || <span className="text-gray-400 italic">—</span>}</td>
                     <td className="px-5 py-3">
                       <span className="px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-600">
                         {t.category}
+                      </span>
+                    </td>
+                    <td className="px-5 py-3">
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${t.type === "income" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-600"}`}>
+                        {t.type === "income" ? "Income" : "Expense"}
                       </span>
                     </td>
                     <td className={`px-5 py-3 text-right font-medium ${t.type === "income" ? "text-green-600" : "text-red-500"}`}>
