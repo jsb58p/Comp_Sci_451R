@@ -22,6 +22,9 @@ public class User {
     @Column(nullable = false)
     private boolean verified = false;
 
+    @Column(name = "dark_mode", nullable = false)
+    private boolean darkMode = false;
+
     public User() {}
 
     public User(String username, String email, String password) {
@@ -35,10 +38,12 @@ public class User {
     public String getEmail() { return email; }
     public String getPassword() { return password; }
     public boolean isVerified() { return verified; }
+    public boolean isDarkMode() { return darkMode; }
 
     public void setId(Long id) { this.id = id; }
     public void setUsername(String username) { this.username = username; }
     public void setEmail(String email) { this.email = email; }
     public void setPassword(String password) { this.password = password; }
     public void setVerified(boolean verified) { this.verified = verified; }
+    public void setDarkMode(boolean darkMode) { this.darkMode = darkMode; }
 }

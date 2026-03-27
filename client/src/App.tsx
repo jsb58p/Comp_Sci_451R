@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import ResetPassword from "./ResetPassword";
 import API_BASE from "./config";
@@ -71,15 +71,39 @@ function Sidebar({
 
 function AppLayout({ username, onLogout }: { username: string; onLogout: () => void }) {
   const [activePage, setActivePage] = useState<Page>("dashboard");
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    fetch(`${API_BASE}/api/profile`, { credentials: "include" })
+      .then((res) => res.json())
+      .then((d) => {
+        if (d.darkMode) {
+          setDarkMode(true);
+          document.documentElement.classList.add("dark");
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  function handleToggleDark(value: boolean) {
+    setDarkMode(value);
+    document.documentElement.classList.toggle("dark", value);
+    fetch(`${API_BASE}/api/preferences`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ darkMode: value }),
+    }).catch(() => {});
+  }
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <Sidebar activePage={activePage} onNavigate={setActivePage} onLogout={onLogout} />
       <main className="flex-1 overflow-y-auto">
         {activePage === "dashboard" && <DashboardPage username={username} />}
         {activePage === "spending" && <SpendingPage />}
         {activePage === "income" && <IncomePage />}
-        {activePage === "profile" && <ProfilePage />}
+        {activePage === "profile" && <ProfilePage darkMode={darkMode} onToggleDark={handleToggleDark} />}
       </main>
     </div>
   );
