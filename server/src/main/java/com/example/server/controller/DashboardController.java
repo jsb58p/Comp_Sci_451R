@@ -124,6 +124,20 @@ public class DashboardController {
                 .sorted((a, b) -> Double.compare((double) b.get("value"), (double) a.get("value")))
                 .toList();
 
+        // Income by category
+        Map<String, Double> byIncomeCat = allIncomes.stream()
+                .collect(Collectors.groupingBy(Income::getCategory,
+                        Collectors.summingDouble(Income::getAmount)));
+        List<Map<String, Object>> incomeByCategory = byIncomeCat.entrySet().stream()
+                .map(e -> {
+                    Map<String, Object> m = new LinkedHashMap<>();
+                    m.put("name", e.getKey());
+                    m.put("value", e.getValue());
+                    return m;
+                })
+                .sorted((a, b) -> Double.compare((double) b.get("value"), (double) a.get("value")))
+                .toList();
+
         Map<String, Object> response = new LinkedHashMap<>();
         response.put("totalBalance", totalBalance);
         response.put("monthlyIncome", monthlyIncome);
@@ -131,6 +145,7 @@ public class DashboardController {
         response.put("recentTransactions", top10);
         response.put("monthlyTrend", monthlyTrend);
         response.put("spendingByCategory", spendingByCategory);
+        response.put("incomeByCategory", incomeByCategory);
 
         return ResponseEntity.ok(response);
     }

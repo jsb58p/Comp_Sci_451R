@@ -30,6 +30,7 @@ interface DashboardData {
   recentTransactions: Transaction[];
   monthlyTrend: { month: string; income: number; expenses: number }[];
   spendingByCategory: { name: string; value: number }[];
+  incomeByCategory: { name: string; value: number }[];
 }
 
 const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#06b6d4"];
@@ -70,9 +71,9 @@ export default function DashboardPage({ username }: { username: string }) {
         </div>
       </div>
 
-      {/* Charts */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-        <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-100">
+      {/* Income vs Expenses + Category Breakdown */}
+      <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-100 space-y-6">
+        <div>
           <h2 className="text-sm font-medium text-gray-700 mb-4">Income vs Expenses</h2>
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={data?.monthlyTrend ?? []}>
@@ -87,25 +88,48 @@ export default function DashboardPage({ username }: { username: string }) {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-100">
-          <h2 className="text-sm font-medium text-gray-700 mb-4">Spending by Category</h2>
-          <ResponsiveContainer width="100%" height={250}>
-            <PieChart>
-              <Pie
-                data={data?.spendingByCategory ?? []}
-                cx="50%"
-                cy="50%"
-                outerRadius={80}
-                dataKey="value"
-                label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
-              >
-                {(data?.spendingByCategory ?? []).map((_entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} />
-            </PieChart>
-          </ResponsiveContainer>
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+          <div>
+            <h2 className="text-sm font-medium text-gray-700 mb-4">Spending by Category</h2>
+            <ResponsiveContainer width="100%" height={250}>
+              <PieChart>
+                <Pie
+                  data={data?.spendingByCategory ?? []}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  dataKey="value"
+                  label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
+                >
+                  {(data?.spendingByCategory ?? []).map((_entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div>
+            <h2 className="text-sm font-medium text-gray-700 mb-4">Income by Category</h2>
+            <ResponsiveContainer width="100%" height={250}>
+              <PieChart>
+                <Pie
+                  data={data?.incomeByCategory ?? []}
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                  dataKey="value"
+                  label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
+                >
+                  {(data?.incomeByCategory ?? []).map((_entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
 
