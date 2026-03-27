@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import API_BASE from "../config";
+
+const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#06b6d4"];
 
 interface Income {
   id: number;
@@ -40,6 +43,15 @@ export default function IncomePage() {
     });
 
   const total = filtered.reduce((sum, i) => sum + i.amount, 0);
+
+  const incomeByCategory = Object.entries(
+    filtered.reduce<Record<string, number>>((acc, i) => {
+      acc[i.category] = (acc[i.category] ?? 0) + i.amount;
+      return acc;
+    }, {})
+  )
+    .map(([name, value]) => ({ name, value }))
+    .sort((a, b) => b.value - a.value);
 
   async function handleAdd() {
     if (!form.category || !form.amount) {
@@ -159,6 +171,32 @@ export default function IncomePage() {
         <p className="text-sm text-gray-500">Total Income</p>
         <p className="text-2xl font-bold text-green-600">${total.toFixed(2)}</p>
         <p className="text-xs text-gray-400 mt-1">{filtered.length} transaction{filtered.length !== 1 ? "s" : ""}</p>
+      </div>
+
+      {/* Income by Category */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+        <h2 className="text-sm font-medium text-gray-700 mb-4">Income by Category</h2>
+        {incomeByCategory.length === 0 ? (
+          <p className="text-sm text-gray-400 text-center py-8">No data to display</p>
+        ) : (
+          <ResponsiveContainer width="100%" height={250}>
+            <PieChart>
+              <Pie
+                data={incomeByCategory}
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                dataKey="value"
+                label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
+              >
+                {incomeByCategory.map((_entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} />
+            </PieChart>
+          </ResponsiveContainer>
+        )}
       </div>
 
       {/* Table */}
