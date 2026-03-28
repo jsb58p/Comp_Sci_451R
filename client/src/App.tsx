@@ -35,9 +35,9 @@ function Sidebar({
   ];
 
   return (
-    <aside className="w-56 bg-white border-r border-gray-200 flex flex-col h-screen shrink-0">
-      <div className="p-5 border-b border-gray-200">
-        <h2 className="font-semibold text-gray-900">Personal Finance App</h2>
+    <aside className="w-56 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col h-screen shrink-0">
+      <div className="p-5 border-b border-gray-200 dark:border-gray-700">
+        <h2 className="font-semibold text-gray-900 dark:text-gray-100">Personal Finance App</h2>
       </div>
       <nav className="flex-1 p-3 flex flex-col gap-1">
         {navItems.map((item) => (
@@ -46,18 +46,18 @@ function Sidebar({
             onClick={() => onNavigate(item.page)}
             className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
               activePage === item.page
-                ? "bg-black text-white"
-                : "text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+                ? "bg-black text-white dark:bg-gray-600 dark:text-white"
+                : "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100"
             }`}
           >
             {item.label}
           </button>
         ))}
       </nav>
-      <div className="p-3 border-t border-gray-200">
+      <div className="p-3 border-t border-gray-200 dark:border-gray-700">
         <button
           onClick={onLogout}
-          className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+          className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
         >
           Logout
         </button>

@@ -76,39 +76,41 @@ export default function ProfilePage({ darkMode, onToggleDark }: ProfilePageProps
     }
   }
 
+  const inputClass = "border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 disabled:opacity-60";
+
   return (
-    <div className={`p-8 space-y-6 ${darkMode ? "bg-gray-900 min-h-screen" : ""}`}>
+    <div className="p-8 space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className={`text-2xl font-semibold ${darkMode ? "text-white" : "text-gray-900"}`}>Profile</h1>
+        <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Profile</h1>
         <button
           onClick={() => onToggleDark(!darkMode)}
-          className="border rounded-lg px-3 py-1.5 text-sm hover:bg-gray-50 transition-colors"
+          className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1.5 text-sm bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
         >
           {darkMode ? "Light Mode" : "Dark Mode"}
         </button>
       </div>
 
       {/* Profile Info */}
-      <div className={`rounded-xl shadow-sm border p-5 space-y-4 ${darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-100"}`}>
-        <h2 className={`text-sm font-medium ${darkMode ? "text-gray-200" : "text-gray-700"}`}>Profile Information</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-5 space-y-4">
+        <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300">Profile Information</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex flex-col gap-1">
-            <label className={`text-xs font-medium ${darkMode ? "text-gray-400" : "text-gray-600"}`}>Name</label>
+            <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Name</label>
             <input value={editForm.name} onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
               disabled={!editingProfile}
-              className={`border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black disabled:bg-gray-50 disabled:text-gray-500 ${darkMode ? "bg-gray-700 border-gray-600 text-white" : ""}`} />
+              className={inputClass} />
           </div>
           <div className="flex flex-col gap-1">
-            <label className={`text-xs font-medium ${darkMode ? "text-gray-400" : "text-gray-600"}`}>Username</label>
+            <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Username</label>
             <input value={editForm.username} onChange={(e) => setEditForm({ ...editForm, username: e.target.value })}
               disabled={!editingProfile}
-              className={`border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black disabled:bg-gray-50 disabled:text-gray-500 ${darkMode ? "bg-gray-700 border-gray-600 text-white" : ""}`} />
+              className={inputClass} />
           </div>
           <div className="flex flex-col gap-1 sm:col-span-2">
-            <label className={`text-xs font-medium ${darkMode ? "text-gray-400" : "text-gray-600"}`}>Email</label>
+            <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Email</label>
             <input value={editForm.email} onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
               disabled={!editingProfile}
-              className={`border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black disabled:bg-gray-50 disabled:text-gray-500 ${darkMode ? "bg-gray-700 border-gray-600 text-white" : ""}`} />
+              className={inputClass} />
           </div>
         </div>
         {profileMessage && (
@@ -121,22 +123,22 @@ export default function ProfilePage({ darkMode, onToggleDark }: ProfilePageProps
           {!editingProfile ? (
             <>
               <button onClick={() => setEditingProfile(true)}
-                className="bg-black text-white text-sm px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
+                className="bg-black dark:bg-gray-700 text-white text-sm px-4 py-2 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors">
                 Edit Profile
               </button>
               <button onClick={handleSendPasswordReset} disabled={sendingReset}
-                className="text-sm px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors disabled:opacity-50">
+                className="text-sm px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors disabled:opacity-50">
                 {sendingReset ? "Sending..." : "Change Password"}
               </button>
             </>
           ) : (
             <>
               <button onClick={handleSaveProfile}
-                className="bg-black text-white text-sm px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors">
+                className="bg-black dark:bg-gray-700 text-white text-sm px-4 py-2 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-600 transition-colors">
                 Save Changes
               </button>
               <button onClick={() => { setEditingProfile(false); setProfileMessage(null); }}
-                className="text-sm px-4 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+                className="text-sm px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                 Cancel
               </button>
             </>
@@ -145,12 +147,12 @@ export default function ProfilePage({ darkMode, onToggleDark }: ProfilePageProps
       </div>
 
       {/* Account Settings */}
-      <div className={`rounded-xl shadow-sm border p-5 space-y-3 ${darkMode ? "bg-gray-800 border-gray-700" : "bg-white border-gray-100"}`}>
-        <h2 className={`text-sm font-medium ${darkMode ? "text-gray-200" : "text-gray-700"}`}>Account Settings</h2>
-        <div className={`text-sm space-y-2 ${darkMode ? "text-gray-300" : "text-gray-600"}`}>
-          <p><span className="font-medium">Account Type:</span> {profile?.accountType ?? "—"}</p>
-          <p><span className="font-medium">Status:</span> {profile?.status ?? "—"}</p>
-          <p><span className="font-medium">Member Since:</span> {profile?.joinDate ?? "—"}</p>
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-5 space-y-3">
+        <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300">Account Settings</h2>
+        <div className="text-sm space-y-2 text-gray-600 dark:text-gray-400">
+          <p><span className="font-medium text-gray-700 dark:text-gray-300">Account Type:</span> {profile?.accountType ?? "—"}</p>
+          <p><span className="font-medium text-gray-700 dark:text-gray-300">Status:</span> {profile?.status ?? "—"}</p>
+          <p><span className="font-medium text-gray-700 dark:text-gray-300">Member Since:</span> {profile?.joinDate ?? "—"}</p>
         </div>
       </div>
     </div>

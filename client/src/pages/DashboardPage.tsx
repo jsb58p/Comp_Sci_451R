@@ -47,24 +47,24 @@ export default function DashboardPage({ username }: { username: string }) {
 
   return (
     <div className="p-8 space-y-6">
-      <h1 className="text-2xl font-semibold text-gray-900">Welcome, {username}!</h1>
+      <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Welcome, {username}!</h1>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-100">
-          <p className="text-sm text-gray-500">Total Balance</p>
-          <p className="text-2xl font-bold text-gray-900">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-5 border border-gray-100 dark:border-gray-700">
+          <p className="text-sm text-gray-500 dark:text-gray-400">Total Balance</p>
+          <p className="text-2xl font-bold text-gray-900 dark:text-white">
             {data?.totalBalance != null ? `$${data.totalBalance.toFixed(2)}` : "—"}
           </p>
         </div>
-        <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-100">
-          <p className="text-sm text-gray-500">Monthly Income</p>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-5 border border-gray-100 dark:border-gray-700">
+          <p className="text-sm text-gray-500 dark:text-gray-400">Monthly Income</p>
           <p className="text-2xl font-bold text-green-600">
             {data?.monthlyIncome != null ? `$${data.monthlyIncome.toFixed(2)}` : "—"}
           </p>
         </div>
-        <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-100">
-          <p className="text-sm text-gray-500">Monthly Spending</p>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-5 border border-gray-100 dark:border-gray-700">
+          <p className="text-sm text-gray-500 dark:text-gray-400">Monthly Spending</p>
           <p className="text-2xl font-bold text-red-500">
             {data?.monthlyExpenses != null ? `$${data.monthlyExpenses.toFixed(2)}` : "—"}
           </p>
@@ -72,15 +72,15 @@ export default function DashboardPage({ username }: { username: string }) {
       </div>
 
       {/* Income vs Expenses + Category Breakdown */}
-      <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-100 space-y-6">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-5 border border-gray-100 dark:border-gray-700 space-y-6">
         <div>
-          <h2 className="text-sm font-medium text-gray-700 mb-4">Income vs Expenses</h2>
+          <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Income vs Expenses</h2>
           <ResponsiveContainer width="100%" height={250}>
             <LineChart data={data?.monthlyTrend ?? []}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis dataKey="month" stroke="#9ca3af" />
               <YAxis stroke="#9ca3af" />
-              <Tooltip />
+              <Tooltip contentStyle={{ backgroundColor: "#1f2937", border: "1px solid #374151", color: "#f9fafb" }} />
               <Legend />
               <Line type="monotone" dataKey="income" stroke="#10b981" strokeWidth={2} name="Income" />
               <Line type="monotone" dataKey="expenses" stroke="#ef4444" strokeWidth={2} name="Expenses" />
@@ -90,7 +90,7 @@ export default function DashboardPage({ username }: { username: string }) {
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
           <div>
-            <h2 className="text-sm font-medium text-gray-700 mb-4">Spending by Category</h2>
+            <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Spending by Category</h2>
             <ResponsiveContainer width="100%" height={250}>
               <PieChart>
                 <Pie
@@ -105,13 +105,13 @@ export default function DashboardPage({ username }: { username: string }) {
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} />
+                <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} contentStyle={{ backgroundColor: "#1f2937", border: "1px solid #374151", color: "#f9fafb" }} />
               </PieChart>
             </ResponsiveContainer>
           </div>
 
           <div>
-            <h2 className="text-sm font-medium text-gray-700 mb-4">Income by Category</h2>
+            <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Income by Category</h2>
             <ResponsiveContainer width="100%" height={250}>
               <PieChart>
                 <Pie
@@ -126,7 +126,7 @@ export default function DashboardPage({ username }: { username: string }) {
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
-                <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} />
+                <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} contentStyle={{ backgroundColor: "#1f2937", border: "1px solid #374151", color: "#f9fafb" }} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -134,14 +134,14 @@ export default function DashboardPage({ username }: { username: string }) {
       </div>
 
       {/* Recent Transactions */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-        <div className="p-5 border-b border-gray-100">
-          <h2 className="text-sm font-medium text-gray-700">Recent Transactions</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
+        <div className="p-5 border-b border-gray-100 dark:border-gray-700">
+          <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300">Recent Transactions</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-left text-gray-500 border-b border-gray-100">
+              <tr className="text-left text-gray-500 dark:text-gray-400 border-b border-gray-100 dark:border-gray-700">
                 <th className="px-5 py-3 font-medium">Date</th>
                 <th className="px-5 py-3 font-medium">Description</th>
                 <th className="px-5 py-3 font-medium">Category</th>
@@ -152,22 +152,22 @@ export default function DashboardPage({ username }: { username: string }) {
             <tbody>
               {(data?.recentTransactions ?? []).length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-5 py-8 text-center text-gray-400">
+                  <td colSpan={5} className="px-5 py-8 text-center text-gray-400 dark:text-gray-500">
                     No transactions yet
                   </td>
                 </tr>
               ) : (
                 (data?.recentTransactions ?? []).map((t) => (
-                  <tr key={t.id} className="border-b border-gray-50 last:border-0">
-                    <td className="px-5 py-3 text-gray-500">{new Date(t.date).toLocaleDateString()}</td>
-                    <td className="px-5 py-3 text-gray-700">{t.description || <span className="text-gray-400 italic">—</span>}</td>
+                  <tr key={t.id} className="border-b border-gray-50 dark:border-gray-700 last:border-0">
+                    <td className="px-5 py-3 text-gray-500 dark:text-gray-400">{new Date(t.date).toLocaleDateString()}</td>
+                    <td className="px-5 py-3 text-gray-700 dark:text-gray-300">{t.description || <span className="text-gray-400 italic">—</span>}</td>
                     <td className="px-5 py-3">
-                      <span className="px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-600">
+                      <span className="px-2 py-0.5 rounded-full text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">
                         {t.category}
                       </span>
                     </td>
                     <td className="px-5 py-3">
-                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${t.type === "income" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-600"}`}>
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${t.type === "income" ? "bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400" : "bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400"}`}>
                         {t.type === "income" ? "Income" : "Expense"}
                       </span>
                     </td>
