@@ -21,6 +21,7 @@ public class EmailService {
         String link = env.getProperty("app.base-url") + "/api/auth/verify?token=" + token;
 
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(env.getProperty("spring.mail.username"));
         message.setTo(toEmail);
         message.setSubject("Verify your account");
         message.setText("Click the link below to verify your account:\n\n" + link + "\n\nThis link expires in 24 hours.");
@@ -31,6 +32,7 @@ public class EmailService {
         String link = "https://jsb58p.github.io/Comp_Sci_451R/reset-password?token=" + token;
 
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(env.getProperty("spring.mail.username"));
         message.setTo(toEmail);
         message.setSubject("Reset your password");
         message.setText("Click the link below to reset your password:\n\n" + link + "\n\nThis link expires in 1 hour.");

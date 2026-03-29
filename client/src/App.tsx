@@ -72,7 +72,7 @@ function Sidebar({
 function AppLayout({ username, onLogout }: { username: string; onLogout: () => void }) {
   const [activePage, setActivePage] = useState<Page>("dashboard");
   const [autoOpenForm, setAutoOpenForm] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem("darkMode") === "true");
 
   function navigateWithForm(page: Page) {
     setAutoOpenForm(true);
@@ -80,19 +80,24 @@ function AppLayout({ username, onLogout }: { username: string; onLogout: () => v
   }
 
   useEffect(() => {
+    document.documentElement.classList.toggle("dark", darkMode);
+  }, []);
+
+  useEffect(() => {
     fetch(`${API_BASE}/api/profile`, { credentials: "include" })
       .then((res) => res.json())
       .then((d) => {
-        if (d.darkMode) {
-          setDarkMode(true);
-          document.documentElement.classList.add("dark");
-        }
+        const isDark = !!d.darkMode;
+        setDarkMode(isDark);
+        localStorage.setItem("darkMode", String(isDark));
+        document.documentElement.classList.toggle("dark", isDark);
       })
       .catch(() => {});
   }, []);
 
   function handleToggleDark(value: boolean) {
     setDarkMode(value);
+    localStorage.setItem("darkMode", String(value));
     document.documentElement.classList.toggle("dark", value);
     fetch(`${API_BASE}/api/preferences`, {
       method: "PUT",
