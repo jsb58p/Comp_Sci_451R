@@ -4,6 +4,19 @@ import API_BASE from "../config";
 
 const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#06b6d4"];
 
+type SortCol = "date" | "description" | "category" | "amount";
+type SortDir = "asc" | "desc";
+
+function SortIcon({ col, sortCol, sortDir }: { col: SortCol; sortCol: SortCol; sortDir: SortDir }) {
+  const active = col === sortCol;
+  return (
+    <span className={`inline-flex flex-col leading-none ml-1 align-middle ${active ? "text-gray-700 dark:text-gray-200" : "text-gray-400 dark:text-gray-500"}`} style={{ fontSize: "8px", gap: "1px", verticalAlign: "middle" }}>
+      <span style={{ opacity: active && sortDir === "asc" ? 1 : 0.4 }}>▲</span>
+      <span style={{ opacity: active && sortDir === "desc" ? 1 : 0.4 }}>▼</span>
+    </span>
+  );
+}
+
 interface Income {
   id: number;
   date: string;
@@ -15,8 +28,9 @@ interface Income {
 export default function IncomePage({ autoOpenForm, onFormOpened }: { autoOpenForm?: boolean; onFormOpened?: () => void } = {}) {
   const [incomes, setIncomes] = useState<Income[]>([]);
   const [filterCategory, setFilterCategory] = useState("all");
-  const [filterDate, setFilterDate] = useState("");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [searchText, setSearchText] = useState("");
+  const [sortCol, setSortCol] = useState<SortCol>("date");
+  const [sortDir, setSortDir] = useState<SortDir>("desc");
   const [showForm, setShowForm] = useState(false);
 
   useEffect(() => {
@@ -38,15 +52,29 @@ export default function IncomePage({ autoOpenForm, onFormOpened }: { autoOpenFor
       .catch(() => setIncomes([]));
   }, []);
 
+  function handleSort(col: SortCol) {
+    if (sortCol === col) {
+      setSortDir(sortDir === "desc" ? "asc" : "desc");
+    } else {
+      setSortCol(col);
+      setSortDir("desc");
+    }
+  }
+
   const filtered = incomes
     .filter((i) => {
       if (filterCategory !== "all" && i.category !== filterCategory) return false;
-      if (filterDate && !i.date.startsWith(filterDate)) return false;
+      const q = searchText.toLowerCase();
+      if (q && !i.category.toLowerCase().includes(q) && !(i.description || "").toLowerCase().includes(q)) return false;
       return true;
     })
     .sort((a, b) => {
-      const diff = new Date(a.date).getTime() - new Date(b.date).getTime();
-      return sortOrder === "desc" ? -diff : diff;
+      let cmp = 0;
+      if (sortCol === "date") cmp = new Date(a.date).getTime() - new Date(b.date).getTime();
+      else if (sortCol === "description") cmp = (a.description || "").localeCompare(b.description || "");
+      else if (sortCol === "category") cmp = a.category.localeCompare(b.category);
+      else if (sortCol === "amount") cmp = a.amount - b.amount;
+      return sortDir === "desc" ? -cmp : cmp;
     });
 
   const total = filtered.reduce((sum, i) => sum + i.amount, 0);
@@ -213,27 +241,34 @@ export default function IncomePage({ autoOpenForm, onFormOpened }: { autoOpenFor
         <div className="p-5 border-b border-gray-100 dark:border-gray-700 flex flex-wrap gap-2 items-center justify-between">
           <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300">Income History</h2>
           <div className="flex flex-wrap gap-2">
+            <input
+              type="text"
+              placeholder="Search description or category..."
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1.5 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-black"
+            />
             <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)}
               className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1.5 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-black">
               <option value="all">All Categories</option>
               {categories.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
-            <input type="month" value={filterDate} onChange={(e) => setFilterDate(e.target.value)}
-              className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1.5 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-black" />
-            <button onClick={() => setSortOrder(sortOrder === "desc" ? "asc" : "desc")}
-              className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1.5 text-sm bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
-              {sortOrder === "desc" ? "Newest First" : "Oldest First"}
-            </button>
           </div>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left text-gray-500 dark:text-gray-400 border-b border-gray-100 dark:border-gray-700">
-                <th className="px-5 py-3 font-medium">Date</th>
-                <th className="px-5 py-3 font-medium">Description</th>
-                <th className="px-5 py-3 font-medium">Category</th>
-                <th className="px-5 py-3 font-medium text-right">Amount</th>
+                {(["date", "description", "category", "amount"] as SortCol[]).map((col) => (
+                  <th
+                    key={col}
+                    className={`px-5 py-3 font-medium cursor-pointer select-none hover:text-gray-700 dark:hover:text-gray-200 transition-colors whitespace-nowrap${col === "amount" ? " text-right" : ""}`}
+                    onClick={() => handleSort(col)}
+                  >
+                    {col.charAt(0).toUpperCase() + col.slice(1)}
+                    <SortIcon col={col} sortCol={sortCol} sortDir={sortDir} />
+                  </th>
+                ))}
                 <th className="px-5 py-3 font-medium"></th>
               </tr>
             </thead>

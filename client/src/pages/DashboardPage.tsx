@@ -52,6 +52,8 @@ export default function DashboardPage({ username, onNavigateWithForm }: { userna
   const [data, setData] = useState<DashboardData | null>(null);
   const [sortCol, setSortCol] = useState<SortCol>("date");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
+  const [filterCategory, setFilterCategory] = useState("all");
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     fetch(`${API_BASE}/api/dashboard`, { credentials: "include" })
@@ -67,6 +69,17 @@ export default function DashboardPage({ username, onNavigateWithForm }: { userna
       setSortCol(col);
       setSortDir("desc");
     }
+  }
+
+  const allCategories = Array.from(new Set((data?.recentTransactions ?? []).map((t) => t.category))).sort();
+
+  function filteredTransactions(txs: Transaction[]) {
+    const q = searchText.toLowerCase();
+    return txs.filter((t) => {
+      if (filterCategory !== "all" && t.category !== filterCategory) return false;
+      if (q && !t.category.toLowerCase().includes(q) && !(t.description || "").toLowerCase().includes(q)) return false;
+      return true;
+    });
   }
 
   function sortedTransactions(txs: Transaction[]) {
@@ -195,8 +208,25 @@ export default function DashboardPage({ username, onNavigateWithForm }: { userna
 
       {/* Recent Transactions */}
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700">
-        <div className="p-5 border-b border-gray-100 dark:border-gray-700">
+        <div className="p-5 border-b border-gray-100 dark:border-gray-700 flex flex-wrap gap-2 items-center justify-between">
           <h2 className="text-sm font-medium text-gray-700 dark:text-gray-300">Recent Transactions</h2>
+          <div className="flex flex-wrap gap-2">
+            <input
+              type="text"
+              placeholder="Search description or category..."
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1.5 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-black"
+            />
+            <select
+              value={filterCategory}
+              onChange={(e) => setFilterCategory(e.target.value)}
+              className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1.5 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-black"
+            >
+              <option value="all">All Categories</option>
+              {allCategories.map((c) => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </div>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -222,7 +252,7 @@ export default function DashboardPage({ username, onNavigateWithForm }: { userna
                   </td>
                 </tr>
               ) : (
-                sortedTransactions(data?.recentTransactions ?? []).map((t) => (
+                sortedTransactions(filteredTransactions(data?.recentTransactions ?? [])).map((t) => (
                   <tr key={t.id} className="border-b border-gray-50 dark:border-gray-700 last:border-0">
                     <td className="px-5 py-3 text-gray-500 dark:text-gray-400">{new Date(t.date).toLocaleDateString()}</td>
                     <td className="px-5 py-3 text-gray-700 dark:text-gray-300">{t.description || <span className="text-gray-400 italic">—</span>}</td>

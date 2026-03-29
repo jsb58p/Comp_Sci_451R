@@ -76,7 +76,7 @@ export default function ProfilePage({ darkMode, onToggleDark }: ProfilePageProps
     }
   }
 
-  const inputClass = "border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 disabled:opacity-60";
+  const inputClass = "border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 read-only:opacity-60 read-only:cursor-default read-only:focus:ring-0";
 
   return (
     <div className="p-8 space-y-6">
@@ -97,19 +97,19 @@ export default function ProfilePage({ darkMode, onToggleDark }: ProfilePageProps
           <div className="flex flex-col gap-1">
             <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Name</label>
             <input value={editForm.name} onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-              disabled={!editingProfile}
+              readOnly={!editingProfile}
               className={inputClass} />
           </div>
           <div className="flex flex-col gap-1">
             <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Username</label>
             <input value={editForm.username} onChange={(e) => setEditForm({ ...editForm, username: e.target.value })}
-              disabled={!editingProfile}
+              readOnly={!editingProfile}
               className={inputClass} />
           </div>
           <div className="flex flex-col gap-1 sm:col-span-2">
             <label className="text-xs font-medium text-gray-600 dark:text-gray-400">Email</label>
             <input value={editForm.email} onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
-              disabled={!editingProfile}
+              readOnly={!editingProfile}
               className={inputClass} />
           </div>
         </div>
