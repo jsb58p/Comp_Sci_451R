@@ -35,8 +35,23 @@ interface DashboardData {
 
 const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#06b6d4"];
 
+type SortCol = "date" | "description" | "category" | "type" | "amount";
+type SortDir = "asc" | "desc";
+
+function SortIcon({ col, sortCol, sortDir }: { col: SortCol; sortCol: SortCol; sortDir: SortDir }) {
+  const active = col === sortCol;
+  return (
+    <span className={`inline-flex flex-col leading-none ml-1 align-middle ${active ? "text-gray-700 dark:text-gray-200" : "text-gray-400 dark:text-gray-500"}`} style={{ fontSize: "8px", gap: "1px", verticalAlign: "middle" }}>
+      <span style={{ opacity: active && sortDir === "asc" ? 1 : 0.4 }}>▲</span>
+      <span style={{ opacity: active && sortDir === "desc" ? 1 : 0.4 }}>▼</span>
+    </span>
+  );
+}
+
 export default function DashboardPage({ username, onNavigateWithForm }: { username: string; onNavigateWithForm: (page: "spending" | "income") => void }) {
   const [data, setData] = useState<DashboardData | null>(null);
+  const [sortCol, setSortCol] = useState<SortCol>("date");
+  const [sortDir, setSortDir] = useState<SortDir>("desc");
 
   useEffect(() => {
     fetch(`${API_BASE}/api/dashboard`, { credentials: "include" })
@@ -44,6 +59,33 @@ export default function DashboardPage({ username, onNavigateWithForm }: { userna
       .then((d: DashboardData) => setData(d))
       .catch(() => setData(null));
   }, []);
+
+  function handleSort(col: SortCol) {
+    if (sortCol === col) {
+      setSortDir(sortDir === "desc" ? "asc" : "desc");
+    } else {
+      setSortCol(col);
+      setSortDir("desc");
+    }
+  }
+
+  function sortedTransactions(txs: Transaction[]) {
+    return [...txs].sort((a, b) => {
+      let cmp = 0;
+      if (sortCol === "date") {
+        cmp = new Date(a.date).getTime() - new Date(b.date).getTime();
+      } else if (sortCol === "description") {
+        cmp = (a.description || "").localeCompare(b.description || "");
+      } else if (sortCol === "category") {
+        cmp = a.category.localeCompare(b.category);
+      } else if (sortCol === "type") {
+        cmp = a.type.localeCompare(b.type); // "expense" < "income"
+      } else if (sortCol === "amount") {
+        cmp = a.amount - b.amount;
+      }
+      return sortDir === "desc" ? -cmp : cmp;
+    });
+  }
 
   return (
     <div className="p-8 space-y-6">
@@ -160,11 +202,16 @@ export default function DashboardPage({ username, onNavigateWithForm }: { userna
           <table className="w-full text-sm">
             <thead>
               <tr className="text-left text-gray-500 dark:text-gray-400 border-b border-gray-100 dark:border-gray-700">
-                <th className="px-5 py-3 font-medium">Date</th>
-                <th className="px-5 py-3 font-medium">Description</th>
-                <th className="px-5 py-3 font-medium">Category</th>
-                <th className="px-5 py-3 font-medium">Type</th>
-                <th className="px-5 py-3 font-medium text-right">Amount</th>
+                {(["date", "description", "category", "type", "amount"] as SortCol[]).map((col) => (
+                  <th
+                    key={col}
+                    className={`px-5 py-3 font-medium cursor-pointer select-none hover:text-gray-700 dark:hover:text-gray-200 transition-colors whitespace-nowrap${col === "amount" ? " text-right" : ""}`}
+                    onClick={() => handleSort(col)}
+                  >
+                    {col.charAt(0).toUpperCase() + col.slice(1)}
+                    <SortIcon col={col} sortCol={sortCol} sortDir={sortDir} />
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
@@ -175,7 +222,7 @@ export default function DashboardPage({ username, onNavigateWithForm }: { userna
                   </td>
                 </tr>
               ) : (
-                (data?.recentTransactions ?? []).map((t) => (
+                sortedTransactions(data?.recentTransactions ?? []).map((t) => (
                   <tr key={t.id} className="border-b border-gray-50 dark:border-gray-700 last:border-0">
                     <td className="px-5 py-3 text-gray-500 dark:text-gray-400">{new Date(t.date).toLocaleDateString()}</td>
                     <td className="px-5 py-3 text-gray-700 dark:text-gray-300">{t.description || <span className="text-gray-400 italic">—</span>}</td>
