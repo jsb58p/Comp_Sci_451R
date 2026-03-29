@@ -37,7 +37,7 @@ function Sidebar({
   return (
     <aside className="w-56 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 flex flex-col h-screen shrink-0">
       <div className="p-5 border-b border-gray-200 dark:border-gray-700">
-        <h2 className="font-semibold text-gray-900 dark:text-gray-100">Personal Finance App</h2>
+        <h2 className="font-semibold text-gray-900 dark:text-gray-100">Budget Bridge</h2>
       </div>
       <nav className="flex-1 p-3 flex flex-col gap-1">
         {navItems.map((item) => (
@@ -71,7 +71,13 @@ function Sidebar({
 
 function AppLayout({ username, onLogout }: { username: string; onLogout: () => void }) {
   const [activePage, setActivePage] = useState<Page>("dashboard");
+  const [autoOpenForm, setAutoOpenForm] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+
+  function navigateWithForm(page: Page) {
+    setAutoOpenForm(true);
+    setActivePage(page);
+  }
 
   useEffect(() => {
     fetch(`${API_BASE}/api/profile`, { credentials: "include" })
@@ -100,9 +106,9 @@ function AppLayout({ username, onLogout }: { username: string; onLogout: () => v
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <Sidebar activePage={activePage} onNavigate={setActivePage} onLogout={onLogout} />
       <main className="flex-1 overflow-y-auto">
-        {activePage === "dashboard" && <DashboardPage username={username} />}
-        {activePage === "spending" && <SpendingPage />}
-        {activePage === "income" && <IncomePage />}
+        {activePage === "dashboard" && <DashboardPage username={username} onNavigateWithForm={navigateWithForm} />}
+        {activePage === "spending" && <SpendingPage autoOpenForm={autoOpenForm} onFormOpened={() => setAutoOpenForm(false)} />}
+        {activePage === "income" && <IncomePage autoOpenForm={autoOpenForm} onFormOpened={() => setAutoOpenForm(false)} />}
         {activePage === "profile" && <ProfilePage darkMode={darkMode} onToggleDark={handleToggleDark} />}
       </main>
     </div>
@@ -302,6 +308,7 @@ function AuthPages() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white rounded-2xl shadow-md w-full max-w-md p-8">
+        <h1 className="text-2xl font-bold text-center mb-6">Budget Bridge</h1>
         <div className="flex mb-6 border-b">
           <button
             className={`flex-1 pb-2 text-sm font-medium transition-colors ${

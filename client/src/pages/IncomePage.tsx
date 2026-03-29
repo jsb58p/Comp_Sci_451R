@@ -12,12 +12,19 @@ interface Income {
   description: string;
 }
 
-export default function IncomePage() {
+export default function IncomePage({ autoOpenForm, onFormOpened }: { autoOpenForm?: boolean; onFormOpened?: () => void } = {}) {
   const [incomes, setIncomes] = useState<Income[]>([]);
   const [filterCategory, setFilterCategory] = useState("all");
   const [filterDate, setFilterDate] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    if (autoOpenForm) {
+      setShowForm(true);
+      onFormOpened?.();
+    }
+  }, [autoOpenForm]);
   const [form, setForm] = useState({ date: new Date().toISOString().split("T")[0], category: "", amount: "", description: "" });
   const [formError, setFormError] = useState<string | null>(null);
   const [categories, setCategories] = useState<string[]>(["Salary", "Freelance", "Investments", "Rental", "Other"]);

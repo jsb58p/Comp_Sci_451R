@@ -12,12 +12,19 @@ interface Expense {
   description: string;
 }
 
-export default function SpendingPage() {
+export default function SpendingPage({ autoOpenForm, onFormOpened }: { autoOpenForm?: boolean; onFormOpened?: () => void } = {}) {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [filterCategory, setFilterCategory] = useState("all");
   const [filterDate, setFilterDate] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    if (autoOpenForm) {
+      setShowForm(true);
+      onFormOpened?.();
+    }
+  }, [autoOpenForm]);
   const [form, setForm] = useState({ date: new Date().toISOString().split("T")[0], category: "", amount: "", description: "" });
   const [formError, setFormError] = useState<string | null>(null);
   const [categories, setCategories] = useState<string[]>(["Housing", "Food", "Transport", "Utilities", "Entertainment", "Healthcare", "Shopping", "Other"]);

@@ -35,7 +35,7 @@ interface DashboardData {
 
 const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#06b6d4"];
 
-export default function DashboardPage({ username }: { username: string }) {
+export default function DashboardPage({ username, onNavigateWithForm }: { username: string; onNavigateWithForm: (page: "spending" | "income") => void }) {
   const [data, setData] = useState<DashboardData | null>(null);
 
   useEffect(() => {
@@ -59,15 +59,33 @@ export default function DashboardPage({ username }: { username: string }) {
         </div>
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-5 border border-gray-100 dark:border-gray-700">
           <p className="text-sm text-gray-500 dark:text-gray-400">Monthly Income</p>
-          <p className="text-2xl font-bold text-green-600">
-            {data?.monthlyIncome != null ? `$${data.monthlyIncome.toFixed(2)}` : "—"}
-          </p>
+          <div className="flex items-center gap-2">
+            <p className="text-2xl font-bold text-green-600">
+              {data?.monthlyIncome != null ? `$${data.monthlyIncome.toFixed(2)}` : "—"}
+            </p>
+            <button
+              onClick={() => onNavigateWithForm("income")}
+              className="border border-gray-300 dark:border-gray-600 rounded-md w-6 h-6 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-sm font-bold"
+              title="Add Income"
+            >
+              +
+            </button>
+          </div>
         </div>
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-5 border border-gray-100 dark:border-gray-700">
           <p className="text-sm text-gray-500 dark:text-gray-400">Monthly Spending</p>
-          <p className="text-2xl font-bold text-red-500">
-            {data?.monthlyExpenses != null ? `$${data.monthlyExpenses.toFixed(2)}` : "—"}
-          </p>
+          <div className="flex items-center gap-2">
+            <p className="text-2xl font-bold text-red-500">
+              {data?.monthlyExpenses != null ? `$${data.monthlyExpenses.toFixed(2)}` : "—"}
+            </p>
+            <button
+              onClick={() => onNavigateWithForm("spending")}
+              className="border border-gray-300 dark:border-gray-600 rounded-md w-6 h-6 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-sm font-bold"
+              title="Add Expense"
+            >
+              +
+            </button>
+          </div>
         </div>
       </div>
 
