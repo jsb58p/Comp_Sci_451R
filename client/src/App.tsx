@@ -141,7 +141,10 @@ function AuthPages() {
   const [resetEmailSent, setResetEmailSent] = useState(false);
 
   if (loggedInUser) {
-    return <AppLayout username={loggedInUser} onLogout={() => setLoggedInUser(null)} />;
+    return <AppLayout username={loggedInUser} onLogout={() => {
+      setLoggedInUser(null);
+      document.documentElement.classList.remove("dark");
+    }} />;
   }
 
   if (emailSent) {

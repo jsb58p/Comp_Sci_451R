@@ -987,3 +987,109 @@ This generated password is for development use only. Your security configuration
 2026-03-29T17:42:19.446-05:00  INFO 34640 --- [server] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2026-03-29T17:42:19.448-05:00  INFO 34640 --- [server] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2026-03-29T17:42:19.449-05:00  INFO 34640 --- [server] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-03-29T20:37:38.238-05:00  INFO 28676 --- [server] [restartedMain] com.example.server.ServerApplication     : Starting ServerApplication using Java 25.0.1 with PID 28676 (C:\Users\proph\IdeaProjects\Comp_Sci_451R\server\target\classes started by proph in C:\Users\proph\IdeaProjects\Comp_Sci_451R)
+2026-03-29T20:37:38.239-05:00  INFO 28676 --- [server] [restartedMain] com.example.server.ServerApplication     : No active profile set, falling back to 1 default profile: "default"
+2026-03-29T20:37:38.272-05:00  INFO 28676 --- [server] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-03-29T20:37:38.272-05:00  INFO 28676 --- [server] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-03-29T20:37:38.732-05:00  INFO 28676 --- [server] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-29T20:37:38.775-05:00  INFO 28676 --- [server] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 37 ms. Found 5 JPA repository interfaces.
+2026-03-29T20:37:39.144-05:00  INFO 28676 --- [server] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-03-29T20:37:39.153-05:00  INFO 28676 --- [server] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-03-29T20:37:39.153-05:00  INFO 28676 --- [server] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.34]
+2026-03-29T20:37:39.192-05:00  INFO 28676 --- [server] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-03-29T20:37:39.192-05:00  INFO 28676 --- [server] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 920 ms
+2026-03-29T20:37:39.309-05:00  INFO 28676 --- [server] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-03-29T20:37:39.357-05:00  INFO 28676 --- [server] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.5.Final
+2026-03-29T20:37:39.382-05:00  INFO 28676 --- [server] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-03-29T20:37:39.604-05:00  INFO 28676 --- [server] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-29T20:37:39.625-05:00  INFO 28676 --- [server] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-03-29T20:37:40.215-05:00  INFO 28676 --- [server] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5d636155
+2026-03-29T20:37:40.216-05:00  INFO 28676 --- [server] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-03-29T20:37:40.308-05:00  WARN 28676 --- [server] [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-03-29T20:37:40.321-05:00  INFO 28676 --- [server] [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.4.8
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-03-29T20:37:40.954-05:00  INFO 28676 --- [server] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-29T20:37:41.393-05:00  INFO 28676 --- [server] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-29T20:37:41.702-05:00  INFO 28676 --- [server] [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-03-29T20:37:41.988-05:00  WARN 28676 --- [server] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-29T20:37:41.999-05:00  WARN 28676 --- [server] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 908019fa-9cca-4b16-ae72-3f80ea5b81fe
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-03-29T20:37:42.009-05:00  INFO 28676 --- [server] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-03-29T20:37:42.104-05:00 DEBUG 28676 --- [server] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 21 mappings in 'requestMappingHandlerMapping'
+2026-03-29T20:37:42.157-05:00 DEBUG 28676 --- [server] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2026-03-29T20:37:42.227-05:00 DEBUG 28676 --- [server] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2026-03-29T20:37:42.257-05:00 DEBUG 28676 --- [server] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2026-03-29T20:37:42.363-05:00  INFO 28676 --- [server] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2026-03-29T20:37:42.394-05:00  INFO 28676 --- [server] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-03-29T20:37:42.401-05:00  INFO 28676 --- [server] [restartedMain] com.example.server.ServerApplication     : Started ServerApplication in 4.474 seconds (process running for 5.041)
+2026-03-29T20:37:55.193-05:00  INFO 28676 --- [server] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-03-29T20:37:55.194-05:00  INFO 28676 --- [server] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-03-29T20:37:55.194-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2026-03-29T20:37:55.194-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2026-03-29T20:37:55.194-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2026-03-29T20:37:55.195-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@10a51d44
+2026-03-29T20:37:55.195-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@2cba68be
+2026-03-29T20:37:55.196-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2026-03-29T20:37:55.196-05:00  INFO 28676 --- [server] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-03-29T20:37:55.227-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : POST "/api/auth/forgot-password", parameters={}
+2026-03-29T20:37:55.228-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.server.controller.AuthController#forgotPassword(ForgotPasswordRequest)
+2026-03-29T20:37:55.271-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.example.server.dto.ForgotPasswordRequest@5308a00d]
+2026-03-29T20:37:56.708-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-03-29T20:37:56.709-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.example.server.dto.AuthResponse@2878fad4]
+2026-03-29T20:37:56.714-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-29T20:38:25.937-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : POST "/api/auth/login", parameters={}
+2026-03-29T20:38:25.938-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.server.controller.AuthController#login(LoginRequest, HttpSession)
+2026-03-29T20:38:25.939-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.example.server.dto.LoginRequest@3519f952]
+2026-03-29T20:38:26.060-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-03-29T20:38:26.060-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.example.server.dto.AuthResponse@1f4d5908]
+2026-03-29T20:38:26.061-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-29T20:38:26.152-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/api/profile", parameters={}
+2026-03-29T20:38:26.152-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/api/dashboard", parameters={}
+2026-03-29T20:38:26.152-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.server.controller.ProfileController#getProfile(HttpSession)
+2026-03-29T20:38:26.152-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.server.controller.DashboardController#getDashboard(HttpSession)
+2026-03-29T20:38:26.211-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-03-29T20:38:26.211-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{name=testuser44, status=Active, username=testuser44, darkMode=true, accountType=Standard, joinDate= (truncated)...]
+2026-03-29T20:38:26.212-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-29T20:38:26.216-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/profile", parameters={}
+2026-03-29T20:38:26.216-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.server.controller.ProfileController#getProfile(HttpSession)
+2026-03-29T20:38:26.245-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-03-29T20:38:26.245-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{name=testuser44, status=Active, username=testuser44, darkMode=true, accountType=Standard, joinDate= (truncated)...]
+2026-03-29T20:38:26.245-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-29T20:38:26.257-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-03-29T20:38:26.257-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{totalBalance=2278.0, monthlyIncome=3000.0, monthlyExpenses=722.0, recentTransactions=[{date=2026-03 (truncated)...]
+2026-03-29T20:38:26.262-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-29T20:38:26.267-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/api/dashboard", parameters={}
+2026-03-29T20:38:26.267-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.server.controller.DashboardController#getDashboard(HttpSession)
+2026-03-29T20:38:26.355-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-03-29T20:38:26.356-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{totalBalance=2278.0, monthlyIncome=3000.0, monthlyExpenses=722.0, recentTransactions=[{date=2026-03 (truncated)...]
+2026-03-29T20:38:26.356-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-29T20:38:27.273-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/api/profile", parameters={}
+2026-03-29T20:38:27.273-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/api/profile", parameters={}
+2026-03-29T20:38:27.273-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.server.controller.ProfileController#getProfile(HttpSession)
+2026-03-29T20:38:27.273-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.server.controller.ProfileController#getProfile(HttpSession)
+2026-03-29T20:38:27.330-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-03-29T20:38:27.331-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{name=testuser44, status=Active, username=testuser44, darkMode=true, accountType=Standard, joinDate= (truncated)...]
+2026-03-29T20:38:27.331-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-03-29T20:38:27.331-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{name=testuser44, status=Active, username=testuser44, darkMode=true, accountType=Standard, joinDate= (truncated)...]
+2026-03-29T20:38:27.331-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-29T20:38:27.332-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-29T20:38:40.012-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : POST "/api/profile/send-password-reset", parameters={}
+2026-03-29T20:38:40.012-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.example.server.controller.ProfileController#sendPasswordReset(HttpSession)
+2026-03-29T20:38:40.958-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2026-03-29T20:38:40.959-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{success=true, message=Password reset email sent.}]
+2026-03-29T20:38:40.959-05:00 DEBUG 28676 --- [server] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-29T21:38:57.729-05:00  INFO 28676 --- [server] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2026-03-29T21:38:57.732-05:00  INFO 28676 --- [server] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2026-03-29T21:38:57.734-05:00  INFO 28676 --- [server] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-29T21:38:57.737-05:00  INFO 28676 --- [server] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-03-29T21:38:57.738-05:00  INFO 28676 --- [server] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
