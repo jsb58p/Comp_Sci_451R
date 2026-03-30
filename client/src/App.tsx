@@ -132,7 +132,12 @@ function AuthPages() {
     usernameOrEmail: "",
     forgotEmail: "",
   });
-  const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(null);
+  const [message, setMessage] = useState<{ text: string; ok: boolean } | null>(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("verified") === "true") return { text: "Email verified! You can now log in.", ok: true };
+    if (params.get("verified") === "false") return { text: "Verification link is invalid or expired.", ok: false };
+    return null;
+  });
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);

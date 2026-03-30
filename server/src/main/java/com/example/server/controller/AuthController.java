@@ -7,6 +7,7 @@ import com.example.server.dto.RegisterRequest;
 import com.example.server.dto.ResetPasswordRequest;
 import com.example.server.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final UserService userService;
+
+    @Value("${app.frontend-url}")
+    private String frontendUrl;
 
     public AuthController(UserService userService) {
         this.userService = userService;
@@ -39,10 +43,14 @@ public class AuthController {
     }
 
     @GetMapping("/verify")
-    public ResponseEntity<AuthResponse> verify(@RequestParam String token) {
+    public ResponseEntity<Void> verify(@RequestParam String token) {
         AuthResponse response = userService.verifyEmail(token);
-        HttpStatus status = response.isSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-        return ResponseEntity.status(status).body(response);
+        String redirect = response.isSuccess()
+                ? frontendUrl + "/?verified=true"
+                : frontendUrl + "/?verified=false";
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .header("Location", redirect)
+                .build();
     }
 
     @PostMapping("/logout")

@@ -11,6 +11,7 @@ import com.example.server.model.VerificationToken;
 import com.example.server.repository.PasswordResetTokenRepository;
 import com.example.server.repository.UserRepository;
 import com.example.server.repository.VerificationTokenRepository;
+import jakarta.mail.MessagingException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,7 +74,11 @@ public class UserService {
         VerificationToken vt = new VerificationToken(token, user, LocalDateTime.now().plusHours(24));
         tokenRepository.save(vt);
 
-        emailService.sendVerificationEmail(user.getEmail(), token);
+        try {
+            emailService.sendVerificationEmail(user.getEmail(), token);
+        } catch (MessagingException e) {
+            return new AuthResponse(false, "Account created but failed to send verification email. Please contact support.", null);
+        }
 
         return new AuthResponse(true, "Check your email to verify your account.", null);
     }
@@ -113,7 +118,11 @@ public class UserService {
         PasswordResetToken prt = new PasswordResetToken(token, user, LocalDateTime.now().plusHours(1));
         resetTokenRepository.save(prt);
 
-        emailService.sendPasswordResetEmail(user.getEmail(), token);
+        try {
+            emailService.sendPasswordResetEmail(user.getEmail(), token);
+        } catch (MessagingException e) {
+            // fail silently — don't reveal email existence
+        }
         return new AuthResponse(true, "If that email exists, a reset link has been sent.", null);
     }
 
