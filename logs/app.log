@@ -982,3 +982,8 @@ This generated password is for development use only. Your security configuration
 2026-03-29T17:03:38.869-05:00 DEBUG 34640 --- [server] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
 2026-03-29T17:03:38.869-05:00 DEBUG 34640 --- [server] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{totalBalance=2278.0, monthlyIncome=3000.0, monthlyExpenses=722.0, recentTransactions=[{date=2026-03 (truncated)...]
 2026-03-29T17:03:38.870-05:00 DEBUG 34640 --- [server] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2026-03-29T17:42:19.441-05:00  INFO 34640 --- [server] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2026-03-29T17:42:19.444-05:00  INFO 34640 --- [server] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2026-03-29T17:42:19.446-05:00  INFO 34640 --- [server] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-03-29T17:42:19.448-05:00  INFO 34640 --- [server] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-03-29T17:42:19.449-05:00  INFO 34640 --- [server] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
