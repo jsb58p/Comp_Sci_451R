@@ -1,5 +1,7 @@
 // The backend forwards to the Ollama /api/generate endpoint over Tailscale.
 
+import API_BASE from "../config";
+
 export interface ChatApiRequest {
   message: string;
   pageContext?: string;
@@ -16,9 +18,10 @@ export async function sendChatMessage(
   req: ChatApiRequest,
   signal?: AbortSignal
 ): Promise<ChatApiResponse> {
-  const res = await fetch("/api/chat", {
+  const res = await fetch(`${API_BASE}/api/chat`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify(req),
     signal,
   });
@@ -63,7 +66,10 @@ export async function captureFinancialData(): Promise<string> {
   await Promise.all(
     endpoints.map(async (url) => {
       try {
-        const res = await fetch(url, { headers: { Accept: "application/json" } });
+        const res = await fetch(`${API_BASE}${url}`, {
+          headers: { Accept: "application/json" },
+          credentials: "include",
+        });
         if (res.ok) {
           const key = url.replace(/^\/api\//, "");
           results[key] = await res.json();
