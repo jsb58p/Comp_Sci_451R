@@ -7,6 +7,7 @@ import SpendingPage from "./pages/SpendingPage";
 import IncomePage from "./pages/IncomePage";
 import ProfilePage from "./pages/ProfilePage";
 import HistoryPage from "./pages/HistoryPage";
+import Chatbot from "./components/chatbot/Chatbot";
 
 type Mode = "login" | "register" | "forgot";
 type Page = "dashboard" | "spending" | "income" | "history" | "profile";
@@ -119,6 +120,7 @@ function AppLayout({ username, onLogout }: { username: string; onLogout: () => v
         {activePage === "history" && <HistoryPage />}
         {activePage === "profile" && <ProfilePage darkMode={darkMode} onToggleDark={handleToggleDark} />}
       </main>
+      <Chatbot />
     </div>
   );
 }
