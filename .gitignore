@@ -1,0 +1,16 @@
+# Logs
+logs/
+*.log
+*.log.*.gz
+
+# Maven build output
+server/target/
+
+# IntelliJ
+.idea/workspace.xml
+.idea/dataSources/
+.idea/dataSources.local.xml
+
+# OS
+.DS_Store
+Thumbs.db
