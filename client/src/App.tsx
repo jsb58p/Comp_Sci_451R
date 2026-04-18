@@ -6,9 +6,10 @@ import DashboardPage from "./pages/DashboardPage";
 import SpendingPage from "./pages/SpendingPage";
 import IncomePage from "./pages/IncomePage";
 import ProfilePage from "./pages/ProfilePage";
+import HistoryPage from "./pages/HistoryPage";
 
 type Mode = "login" | "register" | "forgot";
-type Page = "dashboard" | "spending" | "income" | "profile";
+type Page = "dashboard" | "spending" | "income" | "history" | "profile";
 
 interface AuthResponse {
   success: boolean;
@@ -31,6 +32,7 @@ function Sidebar({
     { label: "Dashboard", page: "dashboard" },
     { label: "Spending", page: "spending" },
     { label: "Income", page: "income" },
+    { label: "History", page: "history" },
     { label: "Profile", page: "profile" },
   ];
 
@@ -114,6 +116,7 @@ function AppLayout({ username, onLogout }: { username: string; onLogout: () => v
         {activePage === "dashboard" && <DashboardPage username={username} onNavigateWithForm={navigateWithForm} />}
         {activePage === "spending" && <SpendingPage autoOpenForm={autoOpenForm} onFormOpened={() => setAutoOpenForm(false)} />}
         {activePage === "income" && <IncomePage autoOpenForm={autoOpenForm} onFormOpened={() => setAutoOpenForm(false)} />}
+        {activePage === "history" && <HistoryPage />}
         {activePage === "profile" && <ProfilePage darkMode={darkMode} onToggleDark={handleToggleDark} />}
       </main>
     </div>
