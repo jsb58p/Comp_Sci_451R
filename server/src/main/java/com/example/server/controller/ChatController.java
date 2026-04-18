@@ -1,4 +1,4 @@
-package com.budgetbridge.chat;
+package com.example.server.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
