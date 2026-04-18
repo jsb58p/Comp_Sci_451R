@@ -54,10 +54,8 @@ export function capturePageContext(): string {
 
 export async function captureFinancialData(): Promise<string> {
   const endpoints = [
-    "/api/summary",
-    "/api/transactions",
-    "/api/income",
-    "/api/spending",
+    "/api/income",    // IncomeController   GET /api/income
+    "/api/spending",  // SpendingController GET /api/spending
   ];
 
   const results: Record<string, unknown> = {};
