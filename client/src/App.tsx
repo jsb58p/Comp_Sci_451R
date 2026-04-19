@@ -113,7 +113,7 @@ function AppLayout({ username, onLogout }: { username: string; onLogout: () => v
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
       <Sidebar activePage={activePage} onNavigate={setActivePage} onLogout={onLogout} />
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1 min-w-0 overflow-y-auto">
         {activePage === "dashboard" && <DashboardPage username={username} onNavigateWithForm={navigateWithForm} />}
         {activePage === "spending" && <SpendingPage autoOpenForm={autoOpenForm} onFormOpened={() => setAutoOpenForm(false)} />}
         {activePage === "income" && <IncomePage autoOpenForm={autoOpenForm} onFormOpened={() => setAutoOpenForm(false)} />}
