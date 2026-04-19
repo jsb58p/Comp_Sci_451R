@@ -143,24 +143,35 @@ export default function Chatbot() {
   }
 
   return (
-    <div data-bb-chatbot>
-      {/* Floating launcher button — always fixed bottom-right */}
-      <button
-        type="button"
-        aria-label={open ? "Close assistant" : "Open assistant"}
-        onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-600 text-white shadow-lg ring-1 ring-black/5 transition hover:bg-emerald-700 hover:shadow-xl active:scale-95"
-      >
-        {open ? <CloseIcon /> : <ChatIcon />}
-      </button>
+    <>
+      {/* Floating launcher button — only shown when the panel is closed */}
+      {!open && (
+        <button
+          type="button"
+          data-bb-chatbot
+          aria-label="Open assistant"
+          onClick={() => setOpen(true)}
+          className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-600 text-white shadow-lg ring-1 ring-black/5 transition hover:bg-emerald-700 hover:shadow-xl active:scale-95"
+        >
+          <ChatIcon />
+        </button>
+      )}
 
-      {/* Slide-out panel */}
+      {/* Slide-out panel — lives inside the layout flex row so it pushes
+          the main content aside instead of covering it. Width animates
+          from 0 to its open size. */}
       <aside
+        data-bb-chatbot
         aria-hidden={!open}
-        className={`fixed right-0 top-0 z-40 flex h-full w-full max-w-md transform flex-col border-l border-gray-200 bg-white shadow-2xl transition-transform duration-300 ease-out sm:w-[28rem] ${
-          open ? "translate-x-0" : "translate-x-full"
+        className={`relative h-screen shrink-0 overflow-hidden border-l border-gray-200 bg-white shadow-lg transition-[width] duration-300 ease-out ${
+          open ? "w-full max-w-md sm:w-[28rem]" : "w-0"
         }`}
       >
+        <div
+          className={`flex h-full w-full max-w-md flex-col sm:w-[28rem] ${
+            open ? "opacity-100" : "pointer-events-none opacity-0"
+          } transition-opacity duration-200`}
+        >
         {/* Header */}
         <header className="flex items-center justify-between border-b border-gray-200 px-5 py-4">
           <div>
@@ -253,12 +264,10 @@ export default function Chatbot() {
               Send
             </button>
           </div>
-          <p className="mt-2 text-[11px] text-gray-400">
-            Powered by your locally deployed LLM. Press Enter to send, Shift+Enter for a new line.
-          </p>
+        </div>
         </div>
       </aside>
-    </div>
+    </>
   );
 }
 
