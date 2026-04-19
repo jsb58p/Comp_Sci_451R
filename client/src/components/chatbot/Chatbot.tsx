@@ -163,7 +163,7 @@ export default function Chatbot() {
       <aside
         data-bb-chatbot
         aria-hidden={!open}
-        className={`relative h-screen shrink-0 overflow-hidden border-l border-gray-200 bg-white shadow-lg transition-[width] duration-300 ease-out ${
+        className={`relative h-screen shrink-0 overflow-hidden border-l border-gray-200 bg-white shadow-lg transition-[width] duration-300 ease-out dark:border-gray-700 dark:bg-gray-800 ${
           open ? "w-full max-w-md sm:w-[28rem]" : "w-0"
         }`}
       >
@@ -173,12 +173,12 @@ export default function Chatbot() {
           } transition-opacity duration-200`}
         >
         {/* Header */}
-        <header className="flex items-center justify-between border-b border-gray-200 px-5 py-4">
+        <header className="flex items-center justify-between border-b border-gray-200 px-5 py-4 dark:border-gray-700">
           <div>
-            <h2 className="text-base font-semibold text-gray-900">
+            <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100">
               Budget Bridge Assistant
             </h2>
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-gray-500 dark:text-gray-400">
               AI-powered insights for your finances
             </p>
           </div>
@@ -186,7 +186,7 @@ export default function Chatbot() {
             <button
               type="button"
               onClick={clearConversation}
-              className="rounded-md px-2 py-1 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              className="rounded-md px-2 py-1 text-xs text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-100"
               title="Start new conversation"
             >
               Clear
@@ -195,7 +195,7 @@ export default function Chatbot() {
               type="button"
               onClick={() => setOpen(false)}
               aria-label="Close"
-              className="rounded-md p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              className="rounded-md p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-100"
             >
               <CloseIcon />
             </button>
@@ -205,7 +205,7 @@ export default function Chatbot() {
         {/* Message list */}
         <div
           ref={scrollRef}
-          className="flex-1 overflow-y-auto bg-gray-50 px-4 py-4"
+          className="flex-1 overflow-y-auto bg-gray-50 px-4 py-4 dark:bg-gray-900"
         >
           <div className="flex flex-col gap-3">
             {messages.map((m) => (
@@ -215,7 +215,7 @@ export default function Chatbot() {
             {loading && <TypingBubble />}
 
             {error && (
-              <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+              <div className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300">
                 {error}
               </div>
             )}
@@ -223,8 +223,8 @@ export default function Chatbot() {
         </div>
 
         {/* Quick actions */}
-        <div className="border-t border-gray-200 bg-white px-4 pt-3">
-          <p className="mb-2 text-xs font-medium uppercase tracking-wide text-gray-500">
+        <div className="border-t border-gray-200 bg-white px-4 pt-3 dark:border-gray-700 dark:bg-gray-800">
+          <p className="mb-2 text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">
             Quick actions
           </p>
           <div className="flex flex-wrap gap-2 pb-3">
@@ -234,7 +234,7 @@ export default function Chatbot() {
                 type="button"
                 disabled={loading}
                 onClick={() => handleSend(action.prompt)}
-                className="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-700 transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-full border border-gray-200 bg-white px-3 py-1.5 text-xs text-gray-700 transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:border-emerald-500 dark:hover:bg-emerald-900/30 dark:hover:text-emerald-300"
               >
                 {action.label}
               </button>
@@ -243,7 +243,7 @@ export default function Chatbot() {
         </div>
 
         {/* Input */}
-        <div className="border-t border-gray-200 bg-white px-4 py-3">
+        <div className="border-t border-gray-200 bg-white px-4 py-3 dark:border-gray-700 dark:bg-gray-800">
           <div className="flex items-end gap-2">
             <textarea
               rows={1}
@@ -252,7 +252,7 @@ export default function Chatbot() {
               onKeyDown={handleKeyDown}
               placeholder="Ask about your budget, transactions, or income…"
               disabled={loading}
-              className="flex-1 resize-none rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-emerald-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-100 disabled:opacity-60"
+              className="flex-1 resize-none rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:border-emerald-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-100 disabled:opacity-60 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-emerald-500 dark:focus:bg-gray-900 dark:focus:ring-emerald-900/40"
               style={{ maxHeight: "8rem" }}
             />
             <button
@@ -281,7 +281,7 @@ function MessageBubble({ role, content }: { role: Role; content: string }) {
         className={`max-w-[85%] whitespace-pre-wrap rounded-2xl px-4 py-2 text-sm leading-relaxed shadow-sm ${
           isUser
             ? "rounded-br-sm bg-emerald-600 text-white"
-            : "rounded-bl-sm border border-gray-200 bg-white text-gray-800"
+            : "rounded-bl-sm border border-gray-200 bg-white text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100"
         }`}
       >
         {content}
@@ -293,7 +293,7 @@ function MessageBubble({ role, content }: { role: Role; content: string }) {
 function TypingBubble() {
   return (
     <div className="flex justify-start">
-      <div className="flex items-center gap-1 rounded-2xl rounded-bl-sm border border-gray-200 bg-white px-4 py-3 shadow-sm">
+      <div className="flex items-center gap-1 rounded-2xl rounded-bl-sm border border-gray-200 bg-white px-4 py-3 shadow-sm dark:border-gray-700 dark:bg-gray-800">
         <Dot delay="0s" />
         <Dot delay="0.15s" />
         <Dot delay="0.3s" />
@@ -305,7 +305,7 @@ function TypingBubble() {
 function Dot({ delay }: { delay: string }) {
   return (
     <span
-      className="inline-block h-2 w-2 animate-bounce rounded-full bg-gray-400"
+      className="inline-block h-2 w-2 animate-bounce rounded-full bg-gray-400 dark:bg-gray-500"
       style={{ animationDelay: delay }}
     />
   );
