@@ -423,6 +423,21 @@ function AuthPages() {
                 )}
               </button>
             </div>
+            {mode === "register" && form.password.length > 0 && (
+              <ul className="mt-2 flex flex-col gap-1">
+                {[
+                  { label: "At least 8 characters", met: form.password.length >= 8 },
+                  { label: "At least one number", met: /[0-9]/.test(form.password) },
+                  { label: "At least one lowercase letter", met: /[a-z]/.test(form.password) },
+                  { label: "At least one special character", met: /[^a-zA-Z0-9]/.test(form.password) },
+                ].map(({ label, met }) => (
+                  <li key={label} className={`text-xs flex items-center gap-1 ${met ? "text-green-600" : "text-red-500"}`}>
+                    <span>{met ? "✓" : "✗"}</span>
+                    {label}
+                  </li>
+                ))}
+              </ul>
+            )}
             {mode === "login" && (
               <button
                 type="button"
