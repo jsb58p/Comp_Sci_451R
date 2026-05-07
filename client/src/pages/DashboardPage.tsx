@@ -168,17 +168,17 @@ export default function DashboardPage({ username, onNavigateWithForm }: { userna
               <PieChart>
                 <Pie
                   data={data?.spendingByCategory ?? []}
-                  cx="50%"
+                  cx="40%"
                   cy="50%"
                   outerRadius={80}
                   dataKey="value"
-                  label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
                 >
                   {(data?.spendingByCategory ?? []).map((_entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
                 <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} contentStyle={{ backgroundColor: "#1f2937", border: "1px solid #374151", color: "#f9fafb" }} />
+                <Legend layout="vertical" align="right" verticalAlign="middle" formatter={(value) => <span style={{ fontSize: "12px" }}>{value}</span>} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -189,17 +189,17 @@ export default function DashboardPage({ username, onNavigateWithForm }: { userna
               <PieChart>
                 <Pie
                   data={data?.incomeByCategory ?? []}
-                  cx="50%"
+                  cx="40%"
                   cy="50%"
                   outerRadius={80}
                   dataKey="value"
-                  label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
                 >
                   {(data?.incomeByCategory ?? []).map((_entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
                 <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} contentStyle={{ backgroundColor: "#1f2937", border: "1px solid #374151", color: "#f9fafb" }} />
+                <Legend layout="vertical" align="right" verticalAlign="middle" formatter={(value) => <span style={{ fontSize: "12px" }}>{value}</span>} />
               </PieChart>
             </ResponsiveContainer>
           </div>

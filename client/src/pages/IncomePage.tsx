@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import API_BASE from "../config";
 
 const COLORS = ["#3b82f6", "#10b981", "#f59e0b", "#8b5cf6", "#ef4444", "#06b6d4"];
@@ -220,17 +220,17 @@ export default function IncomePage({ autoOpenForm, onFormOpened }: { autoOpenFor
             <PieChart>
               <Pie
                 data={incomeByCategory}
-                cx="50%"
+                cx="40%"
                 cy="50%"
                 outerRadius={80}
                 dataKey="value"
-                label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
               >
                 {incomeByCategory.map((_entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
               <Tooltip formatter={(value) => `$${Number(value).toFixed(2)}`} contentStyle={{ backgroundColor: "#1f2937", border: "1px solid #374151", color: "#f9fafb" }} />
+              <Legend layout="vertical" align="right" verticalAlign="middle" formatter={(value) => <span style={{ fontSize: "12px" }}>{value}</span>} />
             </PieChart>
           </ResponsiveContainer>
         )}
