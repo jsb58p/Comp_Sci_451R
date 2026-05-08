@@ -1,4 +1,4 @@
-# Comp_Sci_451R——Team 6
+# Comp_Sci_451R-Team 6
 
 Full-stack application with React frontend and Spring Boot backend.
 
